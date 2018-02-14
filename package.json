@@ -4,12 +4,29 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "menu": "adb shell input keyevent 82",
+    "build:android": "cd android && ./gradlew assembleRelease && cd ..",
+    "postbuild:android": "open ./android/app/build/outputs/apk",
+    "generate:key": "keytool -genkey -v -keystore intestellar-dev.keystore -alias intestellar-dev -keyalg RSA -keysize 2048 -validity 10000",
+    "postgenerate:key": "mv intestellar-dev.keystore ./android/app",
+    "open:xcode": "open ios/intestellar.xcodeproj"
   },
   "dependencies": {
+    "node-libs-react-native": "^1.0.2",
+    "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.1",
-    "stellar-sdk": "^0.8.0"
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.5.0",
+    "redux-promise": "^0.5.3",
+    "stellar-sdk": "^0.8.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",
