@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions'
-import { Operation } from 'stellar-sdk'
+//import { Operation } from 'stellar-sdk'
 
 import config from '../config'
 
