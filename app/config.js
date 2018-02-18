@@ -5,7 +5,7 @@ export default {
 
   assetList: 'https://api.stellarterm.com/v1/ticker.json',
 
-  ephemeralState: [],
+  ephemeralState: [ 'session' ],
   
   colors: {
     brand: '#383838'
