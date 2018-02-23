@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import { Container, Header, Content, Button, Title, Body } from 'native-base'
+import { Container } from 'native-base'
 
 import { persistor, store } from './state/store'
 import config from './config'

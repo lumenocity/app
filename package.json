@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:metro": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -13,14 +13,22 @@
     "generate:key": "keytool -genkey -v -keystore intestellar-dev.keystore -alias intestellar-dev -keyalg RSA -keysize 2048 -validity 10000",
     "postgenerate:key": "mv intestellar-dev.keystore ./android/app",
     "open:xcode": "open ios/intestellar.xcodeproj",
-    "haul": "haul"
+    "haul": "./node_modules/.bin/haul",
+    "start:ios": "./node_modules/.bin/haul start --platform=ios",
+    "start:android": "./node_modules/.bin/haul start --platform=android"
   },
   "dependencies": {
-    "add": "^2.0.6",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react-native": "^3.2.1",
     "native-base": "^2.3.9",
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.1",
+    "react-native-svg": "^6.2.2",
     "react-navigation": "^1.0.3",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",

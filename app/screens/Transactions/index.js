@@ -32,7 +32,7 @@ export default class Transactions extends Component {
   }
 
   static navigationOptions = {
-    title: 'Settings',
+    title: 'Transactions',
   }
 
 }

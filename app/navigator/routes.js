@@ -1,30 +1,33 @@
-import React from 'react'
-
 import MainScreen from '../screens/Main'
 import SendScreen from '../screens/Send'
 import SettingsScreen from '../screens/Settings'
 import TransactionsScreen from '../screens/Transactions'
 import WalletsScreen from '../screens/Wallets'
+import SettingsIcon from '../svgs/Settings'
+import HomeIcon from '../svgs/Home'
+import SendIcon from '../svgs/Send'
+import WalletsIcon from '../svgs/Wallets'
+import TransactionsIcon from '../svgs/Transactions'
 
 export default {
   Main: {
     screen: MainScreen,
-    icon: require('../../assets/home.svg')
+    icon: HomeIcon
   },
   Send: {
     screen: SendScreen,
-    icon: require('../../assets/home.svg')
+    icon: SendIcon
   },
   Settings: {
     screen: SettingsScreen,
-    icon: require('../../assets/home.svg')
+    icon: SettingsIcon
   },
   Transactions: {
     screen: TransactionsScreen,
-    icon: require('../../assets/home.svg')
+    icon: TransactionsIcon
   },
   Wallets: {
     screen: WalletsScreen,
-    icon: require('../../assets/home.svg')
+    icon: WalletsIcon
   }
 }

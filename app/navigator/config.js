@@ -1,13 +1,12 @@
 import React from 'react'
-import { Image } from 'react-native'
+
+import config from '../config'
 
 export default routes => ({
   navigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, tintColor }) => {
-      const route = routes[navigation.state.key]
-      const icon = <Image source={route.icon} width={25} height={25} />
-
-      return icon
+      const { icon: Icon } = routes[navigation.state.key]
+      return <Icon stroke={config.colors.brand} width={24} height={24} />
     }
   }),
 
