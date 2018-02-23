@@ -7,7 +7,8 @@ import { persistor, store } from './state/store'
 import config from './config'
 import Actions from './actions'
 import Loading from './components/Loading'
-import Main from './screens/Main'
+import Navigator from './navigator/index'
+import HeaderBar from './components/HeaderBar'
 
 const onBeforeLift = () => {
   store.dispatch(Actions.Session.initSession())
@@ -21,14 +22,8 @@ export default () => (
       onBeforeLift={onBeforeLift}
       persistor={persistor}>
       <Container>
-        <Header>
-          <Body>
-            <Title>Interstellar.cash</Title>
-          </Body>
-        </Header>
-        <Content>
-          <Main />
-        </Content>
+        <HeaderBar />
+        <Navigator />
       </Container>
     </PersistGate>
   </Provider>

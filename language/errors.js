@@ -6,4 +6,3 @@ export default {
     fallbackMessage: 'An error has occurred'
 
   }
-  

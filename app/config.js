@@ -8,6 +8,6 @@ export default {
   ephemeralState: [ 'session' ],
   
   colors: {
-    brand: '#383838'
+    brand: '#7F39B9'
   }
 }

@@ -16,11 +16,12 @@
     "haul": "haul"
   },
   "dependencies": {
+    "add": "^2.0.6",
     "native-base": "^2.3.9",
-    "node-libs-react-native": "^1.0.2",
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.52.1",
+    "react-navigation": "^1.0.3",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
@@ -28,7 +29,8 @@
     "redux-persist": "^5.5.0",
     "redux-promise": "^0.5.3",
     "stellar-sdk": "^0.8.0",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "yarn": "^1.3.2"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { Content } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
@@ -34,9 +34,9 @@ export default class Main extends Component {
   render() {
     const { assets } = this.context.store.getState()
     return (
-      <View style={{ flex: 1, width: '100%', height: '100%' }}>
+      <Content>
         <AssetList assets={assets.data} />
-      </View>
+      </Content>
     )
   }
 
@@ -46,6 +46,10 @@ export default class Main extends Component {
 
   static childContextTypes = {
     network: PropTypes.object
+  }
+
+  static navigationOptions = {
+    title: 'Main',
   }
 
 }
