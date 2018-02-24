@@ -20,7 +20,11 @@ export default class Accounts extends Component {
   }
 
   addAccount() {
-    alert('Add a new account')
+    this.context.store.dispatch(Actions.Accounts.toggleAdding())
+  }
+
+  renameAccount() {
+
   }
 
   renderAccount(account) {
@@ -29,7 +33,7 @@ export default class Accounts extends Component {
     return (
       <ListItem key={`account-${account.address}`} avatar>
         <Left>
-          <Icon name='cube' />
+          <Icon name="cube" />
         </Left>
         <Body>
           <Text>{account.title} ({account.address.slice(0, 5)}...{account.address.slice(-5)})</Text>
@@ -41,8 +45,6 @@ export default class Accounts extends Component {
 
   render() {
     const { accounts } = this.context.store.getState()
-
-    console.log(accounts)
 
     return (
       <Content>

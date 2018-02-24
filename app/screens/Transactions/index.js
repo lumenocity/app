@@ -48,14 +48,15 @@ export default class Transactions extends Component {
 
   renderTransaction(tx) {
     const amount = tx.startingBalance || tx.amount
+    const effect = effects[tx.type]
     
     return (
       <ListItem avatar key={`tx-${tx.id}`}>
         <Left>
-          <Icon name='pulse' />
+          <Icon name={effect.icon} />
         </Left>
         <Body>
-          <Text>{effects[tx.type]}</Text>
+          <Text>{effect.label}</Text>
           {amount ? (<Text note>{tx.startingBalance || tx.amount} XLM</Text>) : null}
         </Body>
       </ListItem>
@@ -84,7 +85,7 @@ export default class Transactions extends Component {
   }
 
   static navigationOptions = {
-    title: 'Transactions',
+    title: 'Transfers',
   }
 
 }

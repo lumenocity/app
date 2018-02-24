@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import { Container } from 'native-base'
+import { Root, Container } from 'native-base'
 import PropTypes from 'prop-types'
 
 import { persistor, store } from './state/store'
@@ -9,7 +9,7 @@ import Actions from './actions'
 import Loading from './components/Loading'
 import Navigator from './navigator/index'
 import HeaderBar from './components/HeaderBar'
-import AddAccount from './components/AddAccount'
+import AddAccount from './screens/AddAccount'
 import Network from './lib/stellar-network'
 import config from './config'
 
@@ -41,7 +41,7 @@ class Application extends Component {
     this.forceUpdate()
   }
 
-  showAddAccountModal() {
+  noAccountYet() {
     const { accounts, _persist } = store.getState()
     return !_persist ? true : (accounts.data.length === 0 && _persist.rehydrated)
   }
@@ -50,7 +50,13 @@ class Application extends Component {
     store.dispatch(Actions.Accounts.load(this.network, { secret }))
   }
 
+  toggleAddDialog() {
+    store.dispatch(Actions.Accounts.toggleAdding())
+  }
+
   render() {
+    const { accounts } = store.getState()
+
     return (
       <Provider store={store}>
         <PersistGate
@@ -58,14 +64,18 @@ class Application extends Component {
           onBeforeLift={onBeforeLift}
           persistor={persistor}
         >
-          <AddAccount
-            isVisible={this.showAddAccountModal()}
-            onAddAccount={key => this.loadAccount(key)}
-          />
-          <Container>
-            <HeaderBar />
-            <Navigator />
-          </Container>
+          <Root>
+            <AddAccount
+              isVisible={accounts.adding}
+              onAddAccount={key => this.loadAccount(key)}
+              canBeClosed={!this.noAccountYet()}
+              closeDialog={() => this.toggleAddDialog()}
+            />
+            <Container>
+              <HeaderBar />
+              <Navigator />
+            </Container>
+          </Root>
         </PersistGate>
       </Provider>
     )

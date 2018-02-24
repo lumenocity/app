@@ -17,7 +17,7 @@ export default {
     screen: SendScreen,
     icon: 'send'
   },
-  Transactions: {
+  Transfers: {
     screen: TransactionsScreen,
     icon: 'pulse'
   },

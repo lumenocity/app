@@ -6,6 +6,8 @@ export default {
 
   generateKeys: createAction('GENERATE_KEYS', () => Keypair.random),
 
+  toggleAdding: createAction('TOGGLE_ADDING_MODE'),
+
   create: createAction('CREATE_ACCOUNT', async (server, keys) => {
     try {
       const op = Operation.createAccount({
@@ -41,6 +43,8 @@ export default {
       return error
     }
   }),
+
+  rename: createAction('RENAME_ACCOUNT'),
 
   testnetFund: createAction('TESTNET_FUND', async (server, address) => {
     try {

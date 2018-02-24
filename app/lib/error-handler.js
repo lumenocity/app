@@ -1,7 +1,5 @@
 /* globals __DEV__ */
 
-import toast from './toast'
-
 import Errors from '../../language/errors'
 
 /*

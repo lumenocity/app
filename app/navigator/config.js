@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { Icon } from 'native-base'
 
 import config from '../config'
@@ -9,15 +10,21 @@ export default routes => ({
       const { icon } = routes[navigation.state.key]
       return (
         <Icon
-          name={focused ? `ios-${icon}` : `${icon}`}
+          ios={focused ? `ios-${icon}` : `${icon}`}
+          android={`md-${icon}`}
           style={{ color: tintColor }}
+          width={24}
+          height={24}
         />
       )
     }
   }),
 
   tabBarOptions: {
-    activeTintColor: config.colors.brand
+    activeTintColor: Platform.OS === 'ios' ? config.colors.brand : 'white',
+    showIcon: true,
+    allowFontScaling: false,
+    labelStyle: { fontSize: Platform.OS === 'ios' ? 12 : 9 }
   },
 
   tabBarPosition: 'bottom',

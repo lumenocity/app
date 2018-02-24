@@ -4987,7 +4987,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.6.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5154,12 +5154,6 @@ react-hot-loader@3.0.0-beta.7:
     redbox-react "^1.3.6"
     source-map "^0.4.4"
 
-react-native-animatable@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -5199,13 +5193,6 @@ react-native-keyboard-aware-scroll-view@0.4.2:
   dependencies:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
-
-react-native-modal@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/react-native-modal/-/react-native-modal-5.0.1.tgz#469f83048de76121e043820af864cb4a6330661f"
-  dependencies:
-    prop-types "15.6.0"
-    react-native-animatable "^1.2.4"
 
 react-native-safe-area-view@^0.6.0:
   version "0.6.0"
