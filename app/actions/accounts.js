@@ -5,8 +5,8 @@ import randomName from 'project-name-generator'
 export default {
 
   generateKeys: createAction('GENERATE_KEYS', () => Keypair.random),
-
   toggleAdding: createAction('TOGGLE_ADDING_MODE'),
+  select: createAction('SELECT_ACCOUNT'),
 
   create: createAction('CREATE_ACCOUNT', async (server, keys) => {
     try {

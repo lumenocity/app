@@ -15,6 +15,8 @@ export default (state = accounts, action) => {
     }
     case 'TOGGLE_ADDING_MODE':
       return { ...state, adding: !state.adding }
+    case 'SELECT_ACCOUNT':
+      return { ...state, selected: action.payload }
     case 'CLEAR_LOADED_INDICATORS':
       return {
         ...state,

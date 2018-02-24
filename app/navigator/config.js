@@ -10,7 +10,7 @@ export default routes => ({
       const { icon } = routes[navigation.state.key]
       return (
         <Icon
-          ios={focused ? `ios-${icon}` : `${icon}`}
+          ios={`ios-${icon}`}
           android={`md-${icon}`}
           style={{ color: tintColor }}
         />

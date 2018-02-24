@@ -1,4 +1,4 @@
-package com.intestellar;
+package com.lumenocity;
 
 import android.app.Application;
 

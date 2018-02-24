@@ -1,4 +1,4 @@
-package com.intestellar;
+package com.lumenocity;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "intestellar";
+        return "lumenocity";
     }
 }

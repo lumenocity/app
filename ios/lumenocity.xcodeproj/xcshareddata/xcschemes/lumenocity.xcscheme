@@ -29,56 +29,13 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "intestellar.app"
-               BlueprintName = "intestellar"
-               ReferencedContainer = "container:intestellar.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "intestellarTests.xctest"
-               BlueprintName = "intestellarTests"
-               ReferencedContainer = "container:intestellar.xcodeproj">
+               BuildableName = "lumenocity.app"
+               BlueprintName = "lumenocity"
+               ReferencedContainer = "container:lumenocity.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
-   <TestAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "intestellarTests.xctest"
-               BlueprintName = "intestellarTests"
-               ReferencedContainer = "container:intestellar.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "intestellar.app"
-            BlueprintName = "intestellar"
-            ReferencedContainer = "container:intestellar.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
-   </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -94,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "intestellar.app"
-            BlueprintName = "intestellar"
-            ReferencedContainer = "container:intestellar.xcodeproj">
+            BuildableName = "lumenocity.app"
+            BlueprintName = "lumenocity"
+            ReferencedContainer = "container:lumenocity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "intestellar.app"
-            BlueprintName = "intestellar"
-            ReferencedContainer = "container:intestellar.xcodeproj">
+            BuildableName = "lumenocity.app"
+            BlueprintName = "lumenocity"
+            ReferencedContainer = "container:lumenocity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

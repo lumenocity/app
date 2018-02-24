@@ -7,8 +7,8 @@ const buttonStyle = Platform.OS === 'android' ? { color: 'white' } : {}
 
 const HeaderBar = props => (
   <Header>
-    {props.leftButton ? (
-      <Left>
+    <Left>
+      {props.leftButton ? (
         <Button
           transparent
           dark
@@ -20,15 +20,15 @@ const HeaderBar = props => (
             style={buttonStyle}
           />
         </Button>
-      </Left>
-    ) : null}
+      ) : null}
+    </Left>
     <Body>
       <Title>
         {props.title || 'Interstellar.cash'}
       </Title>
     </Body>
-    {props.rightButton ? (
-      <Right>
+    <Right>
+      {props.rightButton ? (
         <Button
           transparent
           dark
@@ -40,8 +40,8 @@ const HeaderBar = props => (
             style={buttonStyle}
           />
         </Button>
-      </Right>
-    ) : null}
+      ) : null}
+    </Right>
   </Header>
 )
 
