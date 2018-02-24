@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Content, List, ListItem, Left, Body, Right, Icon, Text } from 'native-base'
+import { Container, Content, List, ListItem, Left, Body, Right, Icon, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
 import effects from '../../../language/effects'
+import HeaderBar from '../../components/HeaderBar'
 
 export default class Transactions extends Component {
 
@@ -67,15 +68,18 @@ export default class Transactions extends Component {
     const account = this.currentAccount()
 
     return (
-      <Content>
-        {account && account.txs.length > 0 ? (
-          <List>
-            {account.txs.reverse().map(tx => this.renderTransaction(tx))}
-          </List>
-        ) : (
-          <Text>You have no transactions, sucka</Text>
-        )}
-      </Content>
+      <Container>
+        <HeaderBar title="Transactions" />
+        <Content>
+          {account && account.txs.length > 0 ? (
+            <List>
+              {account.txs.reverse().map(tx => this.renderTransaction(tx))}
+            </List>
+          ) : (
+            <Text>You have no transactions, sucka</Text>
+          )}
+        </Content>
+      </Container>
     )
   }
 

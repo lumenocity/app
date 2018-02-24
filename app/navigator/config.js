@@ -13,8 +13,6 @@ export default routes => ({
           ios={focused ? `ios-${icon}` : `${icon}`}
           android={`md-${icon}`}
           style={{ color: tintColor }}
-          width={24}
-          height={24}
         />
       )
     }
@@ -30,5 +28,5 @@ export default routes => ({
   tabBarPosition: 'bottom',
   animationEnabled: false,
   swipeEnabled: false,
-  initialRouteName: 'Main'
+  initialRouteName: 'Accounts'
 })

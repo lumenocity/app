@@ -8,7 +8,6 @@ import { persistor, store } from './state/store'
 import Actions from './actions'
 import Loading from './components/Loading'
 import Navigator from './navigator/index'
-import HeaderBar from './components/HeaderBar'
 import AddAccount from './screens/AddAccount'
 import Network from './lib/stellar-network'
 import config from './config'
@@ -71,10 +70,7 @@ class Application extends Component {
               canBeClosed={!this.noAccountYet()}
               closeDialog={() => this.toggleAddDialog()}
             />
-            <Container>
-              <HeaderBar />
-              <Navigator />
-            </Container>
+            <Navigator />
           </Root>
         </PersistGate>
       </Provider>

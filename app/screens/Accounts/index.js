@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Content, List, ListItem, Left, Body, Right, Icon, Text, Button } from 'native-base'
+import { Container, Content, List, ListItem, Left, Body, Right, Icon, Text, H1, H2 } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
+import HeaderBar from '../../components/HeaderBar'
 
 export default class Accounts extends Component {
 
@@ -27,11 +28,25 @@ export default class Accounts extends Component {
 
   }
 
+  totalBalance(onlyAsset) {
+    const { accounts } = this.context.store.getState()
+
+    return accounts.data.reduce((total, { balances }) => (
+      total + balances.reduce((accountTotal, { amount, asset }) => (
+        onlyAsset === asset ? accountTotal + amount : accountTotal
+      ), 0)
+    ), 0)
+  }
+
+  gotoAccount() {
+    alert('cocks')
+  }
+
   renderAccount(account) {
     const { amount } = account.balances.find(balance => balance.asset === 'native')
 
     return (
-      <ListItem key={`account-${account.address}`} avatar>
+      <ListItem key={`account-${account.address}`} avatar onPress={() => this.gotoAccount()}>
         <Left>
           <Icon name="cube" />
         </Left>
@@ -47,21 +62,25 @@ export default class Accounts extends Component {
     const { accounts } = this.context.store.getState()
 
     return (
-      <Content>
-        {accounts && accounts.data.length > 0 ? (
-          <List>
-            {accounts.data.map(account => this.renderAccount(account))}
-          </List>
-        ) : (
-          <Text>You have no accounts, sucka</Text>
-        )}
-      <Button
-        block
-        onPress={() => this.addAccount()}
-      >
-        <Text>Add an account</Text>
-      </Button>
-      </Content>
+      <Container>
+        <HeaderBar
+          title="Accounts"
+          rightButton
+          rightButtonIcon="add"
+          rightButtonAction={() => this.addAccount()}
+        />
+        <Content>
+          <H2>Total balance:</H2>
+          <H1>{this.totalBalance('native')} XLM</H1>
+          {accounts && accounts.data.length > 0 ? (
+            <List>
+              {accounts.data.map(account => this.renderAccount(account))}
+            </List>
+          ) : (
+            <Text>You have no accounts, sucka</Text>
+          )}
+        </Content>
+      </Container>
     )
   }
 

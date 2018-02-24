@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Content, Button, Text } from 'native-base'
+import { Container, Content, Button, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
+import HeaderBar from '../../components/HeaderBar'
 
 export default class Settings extends Component {
 
@@ -25,14 +26,17 @@ export default class Settings extends Component {
 
   render() {
     return (
-      <Content>
-        <Button
-          block
-          onPress={() => this.resetStore()}
-        >
-          <Text>Purge all store data</Text>
-        </Button>
-      </Content>
+      <Container>
+        <HeaderBar title="Settings" />
+        <Content>
+          <Button
+            block
+            onPress={() => this.resetStore()}
+          >
+            <Text>Purge all store data</Text>
+          </Button>
+        </Content>
+      </Container>
     )
   }
 

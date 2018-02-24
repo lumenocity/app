@@ -27,5 +27,5 @@ export default function errorHandler(failedAction) {
 
   if (__DEV__) console.log(type, payload.message)
 
-  toast(message, true)
+  // toast(message, true)
 }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Content, Text } from 'native-base'
+import { Container, Content, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
+import HeaderBar from '../../components/HeaderBar'
 
 export default class Send extends Component {
 
@@ -21,9 +22,12 @@ export default class Send extends Component {
 
   render() {
     return (
-      <Content>
-        <Text>Send</Text>
-      </Content>
+      <Container>
+        <HeaderBar title="Send Funds" />
+        <Content>
+          <Text>Send</Text>
+        </Content>
+      </Container>
     )
   }
 
