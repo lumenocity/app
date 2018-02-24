@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Content, Text } from 'native-base'
+import { Content, Button, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
 import Actions from '../../actions'
@@ -19,10 +19,19 @@ export default class Settings extends Component {
   respondToStoreChanges() {
   }
 
+  resetStore() {
+    this.context.store.dispatch({ type: 'PURGE_EVERYTHING' })
+  }
+
   render() {
     return (
       <Content>
-        <Text>Settings</Text>
+        <Button
+          block
+          onPress={() => this.resetStore()}
+        >
+          <Text>Purge all store data</Text>
+        </Button>
       </Content>
     )
   }

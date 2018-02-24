@@ -36,9 +36,7 @@ const reducer = (oldState, action) => {
 export const store = createStore(
   reducer,
   defaultState,
-  compose(
-    applyMiddleware.apply(this, middleware)
-  )
+  compose(applyMiddleware.apply(this, middleware))
 )
 
 export const persistor = persistStore(store)

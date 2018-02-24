@@ -1,5 +1,3 @@
 export const session = { uuid: null }
-
 export const assets = { loaded: false, data: [] }
-
-export const wallets = { data: [], selected: null }
+export const accounts = { data: [], selected: null, loaded: false }

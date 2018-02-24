@@ -23,7 +23,8 @@ module.exports = {
     "import/prefer-default-export": ["off"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": ["off"],
-    "class-methods-use-this": ["off"]
+    "class-methods-use-this": ["off"],
+    "array-bracket-spacing": ["error", "always", { "objectsInArrays": false }]
   },
   "settings": {
     "import/resolver": {

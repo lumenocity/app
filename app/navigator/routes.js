@@ -2,32 +2,27 @@ import MainScreen from '../screens/Main'
 import SendScreen from '../screens/Send'
 import SettingsScreen from '../screens/Settings'
 import TransactionsScreen from '../screens/Transactions'
-import WalletsScreen from '../screens/Wallets'
-import SettingsIcon from '../svgs/Settings'
-import HomeIcon from '../svgs/Home'
-import SendIcon from '../svgs/Send'
-import WalletsIcon from '../svgs/Wallets'
-import TransactionsIcon from '../svgs/Transactions'
+import AccountsScreen from '../screens/Accounts'
 
 export default {
   Main: {
     screen: MainScreen,
-    icon: HomeIcon
+    icon: 'home'
+  },
+  Accounts: {
+    screen: AccountsScreen,
+    icon: 'cube'
   },
   Send: {
     screen: SendScreen,
-    icon: SendIcon
-  },
-  Settings: {
-    screen: SettingsScreen,
-    icon: SettingsIcon
+    icon: 'send'
   },
   Transactions: {
     screen: TransactionsScreen,
-    icon: TransactionsIcon
+    icon: 'pulse'
   },
-  Wallets: {
-    screen: WalletsScreen,
-    icon: WalletsIcon
+  Settings: {
+    screen: SettingsScreen,
+    icon: 'settings'
   }
 }
