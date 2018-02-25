@@ -1259,6 +1259,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.fiiv.io.lumenocity;
 				PRODUCT_NAME = lumenocity;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1276,6 +1277,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.fiiv.io.lumenocity;
 				PRODUCT_NAME = lumenocity;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Modal } from 'react-native'
 import {
   Container,
-  Header,
   Content,
   Text,
   Form,
@@ -12,13 +11,12 @@ import {
   Tab,
   Tabs,
   Title,
-  Body,
-  Left,
-  Icon
+  Body
 } from 'native-base'
 import PropTypes from 'prop-types'
 
 import style from './style'
+import HeaderBar from '../../components/HeaderBar'
 
 import { WALLET_SECRET } from '../../../fixtures/testnet'
 
@@ -40,22 +38,12 @@ export default class AddAccount extends Component {
     return (
       <Modal visible={this.props.isVisible} onRequestClose={() => this.onRequestClose()}>
         <Container>
-          <Header>
-            {this.props.canBeClosed ? (
-              <Left>
-                <Button
-                  transparent
-                  dark
-                  onPress={() => this.props.closeDialog()}
-                >
-                  <Icon name="arrow-back" />
-                </Button>
-              </Left>
-            ) : null}
-            <Body>
-              <Title>Add account</Title>
-            </Body>
-          </Header>
+          <HeaderBar
+            title="Add account"
+            leftButton={this.props.canBeClosed}
+            leftButtonIcon="arrow-back"
+            leftButtonAction={() => this.props.closeDialog()}
+          />
           <Content>
             <Tabs initialPage={0}>
               <Tab heading="New">
