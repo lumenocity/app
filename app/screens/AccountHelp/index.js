@@ -20,6 +20,8 @@ export default props => (
       <Text>The Stellar network charges a small fee on each transaction. But it does not keep those funds - instead it re-distributes that amount back to its users automatically, and it does so depending on how many XLM you currently hold. The only catch is that other users have to vote for you to get them before you can!</Text>
       <Text>But since it is a difficult task to get thousands of people to willingly vote, several inflation pools have been made by the community. These pools allow you to vote for them to receive the inflation amount, which they then pay back to you to your account.</Text>
       <Text>The terms vary between pools, but for example Lumenaut is a pool that has 0 fees, so it will give you 100% of your entitled inflation amount, provided you configure it to be your inflation vote.</Text>
+      <H1>Renaming your account</H1>
+      <Text>A name for the account is more something for you – it is only stored in this app. For example, you can name your account CHEQUING or SAVINGS or whatever you want! This is purely for you to help organise.</Text>
     </Content>
   </Container>
 )
