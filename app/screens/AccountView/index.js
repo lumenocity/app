@@ -16,6 +16,7 @@ import {
 } from 'native-base'
 import { Modal, View } from 'react-native'
 import PropTypes from 'prop-types'
+import QRCode from 'react-native-qrcode-svg'
 
 import Actions from '../../actions'
 import styles from './style'
@@ -191,6 +192,12 @@ export default class AccountsView extends Component {
           <H1>{account.title}</H1>
           <H2>Balance</H2>
           {this.renderAssets(account.balances, assets.data)}
+          <QRCode
+            value={account.address}
+            logo={require('../../../android/app/src/main/res/mipmap-mdpi/ic_launcher.png')}
+            logoMargin={5}
+            size={200}
+          />
           {account && account.txs.length > 0 ? (
             <List>
               {account.txs.reverse().map(tx => this.renderTransaction(tx))}
