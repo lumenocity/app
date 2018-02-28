@@ -151,7 +151,6 @@ export default class AccountsView extends Component {
   }
 
   refresh() {
-    console.log('COCKS')
     this.setState({ refreshing: true })
   }
 
