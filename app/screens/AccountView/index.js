@@ -14,7 +14,7 @@ import {
   ActionSheet,
   Input
 } from 'native-base'
-import { Modal, View } from 'react-native'
+import { Modal, View, RefreshControl } from 'react-native'
 import PropTypes from 'prop-types'
 import QRCode from 'react-native-qrcode-svg'
 
@@ -42,7 +42,9 @@ export default class AccountsView extends Component {
     super()
     this.state = {
       showRenameModal: false,
-      loadingTransactions: false
+      loadingTransactions: false,
+      refreshing: false,
+      lastFetch: null
     }
   }
 
@@ -58,6 +60,28 @@ export default class AccountsView extends Component {
   respondToStoreChanges() {
     const { accounts } = this.context.store.getState()
     const currentAccount = this.currentAccount()
+
+    if (this.state.refreshing && !this.state.loadingTransactions) {
+      this.context.store.dispatch(Actions.Accounts.getTransactions(
+        this.context.network,
+        accounts.selected
+      ))
+
+      this.setState({ loadingTransactions: true })
+    }
+
+    if (this.state.refreshing && this.state.loadingTransactions) {
+      this.context.store.dispatch(Actions.Accounts.getTransactions(
+        this.context.network,
+        accounts.selected
+      ))
+
+      this.setState({ loadingTransactions: false, refreshing: false })
+    }
+
+    if (this.state.refreshing && this.state.loadingTransactions) {
+
+    }
 
     if (currentAccount && !currentAccount.txLoaded && !this.state.loadingTransactions) {
       this.context.store.dispatch(Actions.Accounts.getTransactions(
@@ -126,6 +150,11 @@ export default class AccountsView extends Component {
     this.setState({ showRenameModal: !this.state.showRenameModal })
   }
 
+  refresh() {
+    console.log('COCKS')
+    this.setState({ refreshing: true })
+  }
+
   renderRenameModal(oldTitle) {
     return (
       <Modal
@@ -188,7 +217,14 @@ export default class AccountsView extends Component {
           rightButtonIcon="more"
           rightButtonAction={() => this.openActionsMenu()}
         />
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => this.refresh()}
+            />
+          }
+        >
           <H1>{account.title}</H1>
           <H2>Balance</H2>
           {this.renderAssets(account.balances, assets.data)}

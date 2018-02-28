@@ -6,3 +6,12 @@ export const accounts = {
   loaded: false,
   adding: true
 }
+export const transaction = {
+  state: null,
+  amount: null,
+  asset: null,
+  from: null,
+  to: null,
+  memo: null,
+  submittedAt: null
+}

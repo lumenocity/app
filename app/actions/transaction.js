@@ -5,7 +5,14 @@ const XLM = Asset.native()
 
 export default {
 
-  create: createAction('SEND_FUNDS', async (server, keys, destination, amount, asset = XLM) => {
+  clear: createAction('CLEAR_LAST_TRANSACTION'),
+  set: createAction('SET_TRANSACTION_PARAM'),
+
+  create: createAction('SEND_FUNDS', async (
+    server,
+    keys,
+    { destination, amount, asset = XLM }
+  ) => {
     try {
       const op = Operation.payment({ destination, amount: amount.toString(), asset })
       const tx = new TransactionBuilder(keys.publicKey()).addOperation(op).build()
