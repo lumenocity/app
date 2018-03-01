@@ -52,6 +52,14 @@ export default (state = accounts, action) => {
         })
       }
     }
+    case 'FEDERATE_ACCOUNT': {
+      const data = state.data.map(account => {
+        if (account.address !== action.payload.address) return account
+        return { ...account, federatedAddress: action.payload.federatedAddress }
+      })
+
+      return { ...state, data }
+    }
     default:
       return state
   }

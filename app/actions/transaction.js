@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions'
-import { Operation, Asset, TransactionBuilder } from 'stellar-sdk'
+import { Operation, Asset, TransactionBuilder, Keypair, xdr } from 'stellar-sdk'
 
 const XLM = Asset.native()
 
@@ -8,22 +8,24 @@ export default {
   clear: createAction('CLEAR_LAST_TRANSACTION'),
   set: createAction('SET_TRANSACTION_PARAM'),
 
-  create: createAction('SEND_FUNDS', async (
-    server,
-    keys,
-    { destination, amount, asset = XLM }
-  ) => {
+  init: createAction('INIT'),
+
+  send: createAction('SEND_FUNDS', async (server, secret, { to, from, amount, asset }) => {
     try {
-      const op = Operation.payment({ destination, amount: amount.toString(), asset })
-      const tx = new TransactionBuilder(keys.publicKey()).addOperation(op).build()
+      const account = await server.loadAccount(from)
 
-      tx.sign(keys)
+      const op = Operation.payment({
+        destination: to,
+        amount: amount.toString(),
+        asset: asset || XLM
+      })
 
-      const result = await server.submitTransaction(tx)
+      const tx = new TransactionBuilder(account).addOperation(op).build()
+      tx.sign(Keypair.fromSecret(secret))
 
-      console.log(result)
+      const response = await server.submitTransaction(tx)
 
-      return {}
+      return { hash: response.hash }
     } catch (error) {
       error.action = 'SEND_FUNDS'
       return error

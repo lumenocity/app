@@ -2,6 +2,8 @@ import { createAction } from 'redux-actions'
 import { Operation, Keypair } from 'stellar-sdk'
 import randomName from 'project-name-generator'
 
+import config from '../config'
+
 export default {
 
   generateKeys: createAction('GENERATE_KEYS', () => Keypair.random),
@@ -72,6 +74,41 @@ export default {
       return { address, txs }
     } catch (error) {
       error.action = 'GET_TRANSACTIONS'
+      return error
+    }
+  }),
+
+  federate: createAction('FEDERATE_ACCOUNT', async (
+    username, account, domain = config.federationDomain
+  ) => {
+    try {
+      const endpoint = `${config.federationApi}/addresses`
+      const request = await fetch(endpoint, {
+        headers: {
+          method: 'POST',
+          Authorization: `Token ${config.federationApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, domain, account_id: account })
+      })
+
+      const response = await request.json()
+
+      if (!request.ok && response.non_field_errors) {
+        const [ error ] = response.non_field_errors
+
+        switch (error) {
+          case 'The fields username, domain must make a unique set.':
+            throw new Error('Username has already been taken')
+          default: throw new Error('Sorry, an error has occurred')
+        }
+      } else if (!request.ok) {
+        throw new Error('REQUEST_FAILED')
+      }
+
+      return { account, federatedAddress: response.fulladdress }
+    } catch (error) {
+      error.action = 'FEDERATE_ACCOUNT'
       return error
     }
   })

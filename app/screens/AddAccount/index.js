@@ -6,32 +6,30 @@ import {
   Text,
   Form,
   Item,
-  Input,
   Button,
   Tab,
-  Tabs,
-  Title,
-  Body
+  Tabs
 } from 'native-base'
 import PropTypes from 'prop-types'
 
 import style from './style'
 import HeaderBar from '../../components/HeaderBar'
+import InputAddress from '../../components/InputAddress'
 
 import { WALLET_SECRET } from '../../../fixtures/testnet'
 
 export default class AddAccount extends Component {
   constructor() {
     super()
-    this.key = WALLET_SECRET
+    this.state = { privateKey: WALLET_SECRET }
   }
 
   onRequestClose() {
 
   }
 
-  appendKey(key) {
-    this.key = key
+  addKey(privateKey) {
+    this.setState({ privateKey })
   }
 
   render() {
@@ -63,10 +61,9 @@ export default class AddAccount extends Component {
                 </Text>
                 <Form>
                   <Item>
-                    <Input
-                      onChangeText={key => this.appendKey(key)}
-                      placeholder="private key"
-                      value={this.key}
+                    <InputAddress
+                      value={this.state.privateKey}
+                      onUpdate={key => this.addKey(key)}                    
                     />
                   </Item>
                   <Button

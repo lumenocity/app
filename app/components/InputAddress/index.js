@@ -60,4 +60,8 @@ InputAddress.propTypes = {
   value: PropTypes.string
 }
 
+InputAddress.contextTypes = {
+  i18n: PropTypes.object
+}
+
 export default InputAddress

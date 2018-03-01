@@ -1,7 +1,5 @@
 /* globals __DEV__ */
 
-import Errors from '../../language/errors'
-
 /*
   Here, we look up error texts associated with the error code we are given.
 
@@ -17,13 +15,11 @@ import Errors from '../../language/errors'
 
   If that is still not found, grab the generic message.
 */
-export default function errorHandler(failedAction) {
+export default function errorHandler({ t }, failedAction) {
   const { type, payload } = failedAction
-  let message = Errors.fallbackMessage
+  let message = t(`errors.${type}`) || t('errors.fallback_message')
 
-  if (Errors[type] && Errors[type][payload.message]) message = Errors[type][payload.message]
-  else if (Errors[payload.message]) message = Errors[payload.message]
-  else if (payload.message === 'Network request failed') message = Errors.NO_INTERNET
+  if (payload.message === 'Network request failed') message = Errors.NO_INTERNET
 
   if (__DEV__) console.log(type, payload.message)
 

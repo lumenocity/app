@@ -25,15 +25,17 @@ export default class Settings extends Component {
   }
 
   render() {
+    const { i18n } = this.context
+
     return (
       <Container>
-        <HeaderBar title="Settings" />
+        <HeaderBar title={i18n.t('settings.header')} />
         <Content>
           <Button
             block
             onPress={() => this.resetStore()}
           >
-            <Text>Purge all store data</Text>
+            <Text>{i18n.t('settings.actions.purge')}</Text>
           </Button>
         </Content>
       </Container>
@@ -41,7 +43,8 @@ export default class Settings extends Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
+    i18n: PropTypes.object
   }
 
   static navigationOptions = {

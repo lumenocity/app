@@ -8,8 +8,9 @@ import reducers from '../reducers'
 import defaultState from './default-state'
 import errorHandler from '../lib/error-handler'
 import config from '../config'
+import i18n from '../../i18n'
 
-const middleware = [promise, logger]
+const middleware = [ promise, logger ]
 
 const persistConfig = {
   storage,
@@ -21,7 +22,7 @@ const appReducers = persistCombineReducers(persistConfig, reducers)
 
 const reducer = (oldState, action) => {
   // If the action encountered a thrown error, then let's handle it well
-  if (action && action.payload && action.payload instanceof Error) errorHandler(action)
+  if (action && action.payload && action.payload instanceof Error) errorHandler(i18n, action)
 
   let state = oldState
 

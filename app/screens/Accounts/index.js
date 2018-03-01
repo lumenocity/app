@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation'
 import AccountsList from '../AccountsList'
 import AccountView from '../AccountView'
 import AccountHelp from '../AccountHelp'
+import AccountFederate from '../AccountFederate'
 
 export default StackNavigator(
   {
@@ -14,6 +15,9 @@ export default StackNavigator(
     },
     AccountHelp: {
       screen: AccountHelp
+    },
+    Federate: {
+      screen: AccountFederate
     }
   },
   {

@@ -3182,6 +3182,10 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
+i18n-js@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/i18n-js/-/i18n-js-3.0.3.tgz#f537b2bd1e2801eee4f4728a17189ef0991c0270"
+
 iconv-lite@0.4.11:
   version "0.4.11"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.11.tgz#2ecb42fd294744922209a2e7c404dac8793d8ade"
@@ -5193,6 +5197,10 @@ react-native-camera@^1.0.1:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
+react-native-config@^0.11.5:
+  version "0.11.5"
+  resolved "https://registry.npmjs.org/react-native-config/-/react-native-config-0.11.5.tgz#516cb7b6ec437c7739236ca075971db3aabdcb95"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -5221,6 +5229,12 @@ react-native-easy-grid@0.1.17:
   resolved "https://registry.npmjs.org/react-native-easy-grid/-/react-native-easy-grid-0.1.17.tgz#fad8cb371d465828c1c71daa4d8b513d33253452"
   dependencies:
     lodash "^4.11.1"
+
+react-native-i18n@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.npmjs.org/react-native-i18n/-/react-native-i18n-2.0.12.tgz#4a503cc73b2fe55e8518f6d4a1340d3b449d8d1a"
+  dependencies:
+    i18n-js "^3.0.3"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"

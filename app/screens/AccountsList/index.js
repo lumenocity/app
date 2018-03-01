@@ -11,6 +11,7 @@ export default class Accounts extends Component {
 
   componentWillMount() {
     this.unsubscribe = this.context.store.subscribe(() => this.respondToStoreChanges())
+    this.respondToStoreChanges()
   }
 
   componentWillUnmount() {
@@ -18,6 +19,7 @@ export default class Accounts extends Component {
   }
 
   respondToStoreChanges() {
+    this.forceUpdate()
   }
 
   addAccount() {
@@ -45,6 +47,7 @@ export default class Accounts extends Component {
 
   renderAccount(account) {
     const { amount } = account.balances.find(balance => balance.asset === 'native')
+    const { i18n } = this.context
 
     return (
       <ListItem
@@ -57,7 +60,7 @@ export default class Accounts extends Component {
         </Left>
         <Body>
           <Text>{account.title} ({account.address.slice(0, 5)}...{account.address.slice(-5)})</Text>
-          <Text note>Current balance: {amount || 0} XLM</Text>
+          <Text note>{i18n.t('accounts.current_balance')} {amount || 0} XLM</Text>
         </Body>
       </ListItem>
     )
@@ -65,11 +68,12 @@ export default class Accounts extends Component {
 
   render() {
     const { accounts } = this.context.store.getState()
+    const { i18n } = this.context
 
     return (
       <Container>
         <HeaderBar
-          title="Accounts"
+          title={i18n.t('accounts.list_header')}
           rightButton
           rightButtonIcon="add"
           rightButtonAction={() => this.addAccount()}
@@ -82,7 +86,7 @@ export default class Accounts extends Component {
               {accounts.data.map(account => this.renderAccount(account))}
             </List>
           ) : (
-            <Text>You have no accounts, sucka</Text>
+            <Text>{i18n.t('accounts.no_accounts')}</Text>
           )}
         </Content>
       </Container>
@@ -90,7 +94,8 @@ export default class Accounts extends Component {
   }
 
   static contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
+    i18n: PropTypes.object
   }
 
   static navigationOptions = {

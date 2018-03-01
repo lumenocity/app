@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import { Root, Container } from 'native-base'
+import { Root } from 'native-base'
 import PropTypes from 'prop-types'
 
 import { persistor, store } from './state/store'
@@ -11,6 +11,7 @@ import Navigator from './navigator/index'
 import AddAccount from './screens/AddAccount'
 import Network from './lib/stellar-network'
 import config from './config'
+import i18n from '../i18n'
 
 const onBeforeLift = () => {
   store.dispatch(Actions.Session.initSession())
@@ -25,7 +26,7 @@ class Application extends Component {
   }
 
   getChildContext() {
-    return { network: this.network }
+    return { network: this.network, i18n }
   }
 
   componentWillMount() {
@@ -79,7 +80,8 @@ class Application extends Component {
 }
 
 Application.childContextTypes = {
-  network: PropTypes.object
+  network: PropTypes.object,
+  i18n: PropTypes.object
 }
 
 export default Application

@@ -1,3 +1,5 @@
+import env from 'react-native-config'
+
 export default {
 
   network: 'https://horizon-testnet.stellar.org',
@@ -9,5 +11,17 @@ export default {
 
   colors: {
     brand: '#7F39B9'
-  }
+  },
+
+  federationDomain: 'lumenocity.io',
+  federationApi: 'https://stellarid.io/api/',
+  federationApiKey: env.STELLARID_KEY,
+
+  inflationPools: [
+    {
+      name: 'Lumenaut',
+      website: 'https://lumenaut.net/',
+      address: 'GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT'
+    }
+  ]
 }

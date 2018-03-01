@@ -15,7 +15,8 @@
     "open:xcode": "open ios/intestellar.xcodeproj",
     "haul": "./node_modules/.bin/haul",
     "start:ios": "./node_modules/.bin/haul start --platform=ios",
-    "start:android": "./node_modules/.bin/haul start --platform=android"
+    "start:android": "./node_modules/.bin/haul start --platform=android",
+    "postinstall": "./scripts/postinstall.sh"
   },
   "dependencies": {
     "eslint": "^4.18.1",
@@ -30,6 +31,8 @@
     "react": "16.2.0",
     "react-native": "0.52.1",
     "react-native-camera": "^1.0.1",
+    "react-native-config": "^0.11.5",
+    "react-native-i18n": "^2.0.12",
     "react-native-qrcode-scanner": "^0.0.30",
     "react-native-qrcode-svg": "^5.0.6",
     "react-native-svg": "^6.2.2",

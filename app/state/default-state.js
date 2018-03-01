@@ -7,11 +7,12 @@ export const accounts = {
   adding: true
 }
 export const transaction = {
-  state: null,
+  status: null,
   amount: null,
   asset: null,
   from: null,
   to: null,
   memo: null,
-  submittedAt: null
+  submittedAt: null,
+  hash: null
 }

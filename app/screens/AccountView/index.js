@@ -25,17 +25,6 @@ import HeaderBar from '../../components/HeaderBar'
 import Loading from '../../components/Loading'
 import effects from '../../../language/effects'
 
-const actionButtons = [
-
-  { text: 'Email my payment address', icon: 'send', iconColor: config.colors.brand },
-  { text: 'Set up inflation', icon: 'git-compare', iconColor: config.colors.brand },
-  { text: 'Federate address', icon: 'person', iconColor: config.colors.brand },
-  { text: 'Rename account', icon: '', iconColor: config.colors.brand },
-  { text: 'What are these?', icon: 'help', iconColor: config.colors.brand },
-  { text: 'Close', icon: 'close', iconColor: 'red' }
-
-]
-
 export default class AccountsView extends Component {
 
   constructor() {
@@ -46,6 +35,19 @@ export default class AccountsView extends Component {
       refreshing: false,
       lastFetch: null
     }
+  }
+
+  actionButtons() {
+    const { i18n } = this.context
+
+    return [
+      { text: i18n.t('accounts.actions.send'), icon: 'send', iconColor: config.colors.brand },
+      { text: i18n.t('accounts.actions.inflation'), icon: 'git-compare', iconColor: config.colors.brand },
+      { text: i18n.t('accounts.actions.federate'), icon: 'person', iconColor: config.colors.brand },
+      { text: i18n.t('accounts.actions.rename'), icon: 'swap', iconColor: config.colors.brand },
+      { text: i18n.t('accounts.actions.wut'), icon: 'help', iconColor: config.colors.brand },
+      { text: i18n.t('ui.common.close'), icon: 'close', iconColor: 'red' }
+    ]
   }
 
   componentWillMount() {
@@ -127,20 +129,23 @@ export default class AccountsView extends Component {
   }
 
   openActionsMenu() {
+    const { i18n } = this.context
+    const buttons = this.actionButtons()
+
     ActionSheet.show({
-      title: 'Account actions',
-      options: actionButtons,
+      title: i18n.t('accounts.actions.title'),
+      options: buttons,
       cancelButtonIndex: 5
-    }, buttonIndex => this.actionMenuButtonClicked(actionButtons[buttonIndex]))
+    }, buttonIndex => this.actionMenuButtonClicked(buttons[buttonIndex]))
   }
 
   actionMenuButtonClicked({ text }) {
     switch (text) {
       case 'Email my payment address':
       case 'Set up inflation':
-      case 'Federate address':
         alert(`You clicked: ${text}`)
       break
+      case 'Federate address': return this.props.navigation.navigate('Federate')
       case 'Rename account': return this.toggleRenameAccount()
       case 'What are these?': return this.props.navigation.navigate('AccountHelp')
     }
@@ -160,6 +165,7 @@ export default class AccountsView extends Component {
         visible={this.state.showRenameModal}
         transparent
         animationType="fade"
+        onRequestClose={() => {}}
       >
         <View>
           <H1>Rename Account</H1>
@@ -172,6 +178,7 @@ export default class AccountsView extends Component {
   renderTransaction(tx) {
     const amount = tx.startingBalance || tx.amount
     const effect = effects[tx.type]
+    const { i18n } = this.context
     
     return (
       <ListItem avatar key={`tx-${tx.id}`}>
@@ -179,7 +186,7 @@ export default class AccountsView extends Component {
           <Icon name={effect.icon} />
         </Left>
         <Body>
-          <Text>{effect.label}</Text>
+          <Text>{i18n.t(`effects.${tx.type}`)}</Text>
           {amount ? (<Text note>{tx.startingBalance || tx.amount} XLM</Text>) : null}
         </Body>
       </ListItem>
@@ -204,11 +211,12 @@ export default class AccountsView extends Component {
   render() {
     const account = this.currentAccount()
     const { assets } = this.context.store.getState()
+    const { i18n } = this.context
 
     return (
       <Container>
         <HeaderBar
-          title="Viewing Account"
+          title={i18n.t('accounts.view_header')}
           leftButton
           leftButtonIcon="arrow-back"
           leftButtonAction={() => this.goBack()}
@@ -225,7 +233,7 @@ export default class AccountsView extends Component {
           }
         >
           <H1>{account.title}</H1>
-          <H2>Balance</H2>
+          <H2>{i18n.t('accounts.balance')}</H2>
           {this.renderAssets(account.balances, assets.data)}
           <QRCode
             value={account.address}
@@ -237,7 +245,7 @@ export default class AccountsView extends Component {
             <List>
               {account.txs.reverse().map(tx => this.renderTransaction(tx))}
             </List>
-          ) : (account.txLoaded ? <Text>You have no transactions, sucka</Text> : <Loading />)}
+          ) : (account.txLoaded ? <Text>{i18n.t('accounts.no_transactions')}</Text> : <Loading />)}
         </Content>
         {this.renderRenameModal(account.title)}
       </Container>
@@ -246,7 +254,8 @@ export default class AccountsView extends Component {
 
   static contextTypes = {
     store: PropTypes.object,
-    network: PropTypes.object
+    network: PropTypes.object,
+    i18n: PropTypes.object
   }
 
 }
