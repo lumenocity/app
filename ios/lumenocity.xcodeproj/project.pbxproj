@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -39,6 +40,7 @@
 		50D7F43966CB42E4AC7AC979 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EC86DA735D24D61A87E411B /* Octicons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5FA52B7419B2427AB00C351E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7714056BE2E4AE592638704 /* Foundation.ttf */; };
+		632BB51BAB3D4C739321F029 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C0EF1B06B68472F9BC63E30 /* libRNI18n.a */; };
 		65D6000429F946089E05FA66 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5EECDE2641E043B4A926E127 /* Entypo.ttf */; };
 		74C97BA493A94B4CA7498209 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C38B5CCDD340A49AE35D77 /* Ionicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -49,7 +51,6 @@
 		CDE763E9FC4A4269AB6E2697 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBB9F4AC77D841B0BF5A6698 /* Roboto_medium.ttf */; };
 		FA220BA5B61A48BE98F6C054 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A50DC7C97F2E45029F07862C /* libRNCamera.a */; };
 		FE7E7DF9F08C4E32BDEEE8B0 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E03FCECD8B8D4495AB9FD9BD /* Roboto.ttf */; };
-		632BB51BAB3D4C739321F029 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C0EF1B06B68472F9BC63E30 /* libRNI18n.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -347,6 +348,20 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		AEB029EB204847E80050B06C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 073306B5F99E47299F7BE805 /* RNI18n.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNI18n;
+		};
+		AEB029ED204847E80050B06C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 073306B5F99E47299F7BE805 /* RNI18n.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6476C4051EEAA69700B10F51;
+			remoteInfo = "RNI18n-tvOS";
+		};
 		AED3810020459740002EFD21 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B5B2F759CAAD479BA47656D7 /* RNCamera.xcodeproj */;
@@ -364,7 +379,9 @@
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* lumenocityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lumenocityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		073306B5F99E47299F7BE805 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		08B69C00765146C8B1253FCB /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; };
+		0C0EF1B06B68472F9BC63E30 /* libRNI18n.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNI18n.a; sourceTree = "<group>"; };
 		122448C8596E4FA8851D0A6B /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -400,8 +417,6 @@
 		E03FCECD8B8D4495AB9FD9BD /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		E7714056BE2E4AE592638704 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FE2879FB3A664D0C9809A2E7 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		073306B5F99E47299F7BE805 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; name = "RNI18n.xcodeproj"; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		0C0EF1B06B68472F9BC63E30 /* libRNI18n.a */ = {isa = PBXFileReference; name = "libRNI18n.a"; path = "libRNI18n.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -697,8 +712,18 @@
 				74D22C0CA839428A90F56DED /* libRNSVG.a */,
 				08B69C00765146C8B1253FCB /* libRNSVG-tvOS.a */,
 				26DC56D71C6A467DBD29BFF6 /* libReactNativeConfig.a */,
+				0C0EF1B06B68472F9BC63E30 /* libRNI18n.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		AEB029C0204847E80050B06C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AEB029EC204847E80050B06C /* libRNI18n.a */,
+				AEB029EE204847E80050B06C /* libRNI18n-tvOS.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AED380FD2045973E002EFD21 /* Products */ = {
@@ -876,6 +901,10 @@
 				{
 					ProductGroup = AED380FD2045973E002EFD21 /* Products */;
 					ProjectRef = B5B2F759CAAD479BA47656D7 /* RNCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = AEB029C0204847E80050B06C /* Products */;
+					ProjectRef = 073306B5F99E47299F7BE805 /* RNI18n.xcodeproj */;
 				},
 				{
 					ProductGroup = AE1538C32045AEA1005D5630 /* Products */;
@@ -1171,6 +1200,20 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = AE7663162041D07900EE7B47 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AEB029EC204847E80050B06C /* libRNI18n.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNI18n.a;
+			remoteRef = AEB029EB204847E80050B06C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AEB029EE204847E80050B06C /* libRNI18n-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNI18n-tvOS.a";
+			remoteRef = AEB029ED204847E80050B06C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AED3810120459740002EFD21 /* libRNCamera.a */ = {

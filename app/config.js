@@ -10,7 +10,7 @@ export default {
   ephemeralState: [ 'session', 'transaction' ],
 
   colors: {
-    brand: '#7F39B9'
+    brand: '#21E692'
   },
 
   federationDomain: 'lumenocity.io',
