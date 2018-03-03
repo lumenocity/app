@@ -2,11 +2,8 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 const { width: viewportWidth } = Dimensions.get('window')
 
-import config from '../../config'
-
 export default StyleSheet.create({
   totalBalanceContainer: {
-    backgroundColor: config.colors.brand,
     paddingTop: 20,
     paddingBottom: 40
   },

@@ -4,19 +4,21 @@ import {
   Content,
   List,
   ListItem,
-  Left,
-  Body,
-  Right,
   Icon,
   Text,
   H1,
   H2,
-  ActionSheet,
-  Input
+  Input,
+  Button,
+  Left,
+  Right,
+  Body,
+  ActionSheet
 } from 'native-base'
 import { Modal, View, RefreshControl } from 'react-native'
 import PropTypes from 'prop-types'
 import QRCode from 'react-native-qrcode-svg'
+import { distanceInWords } from 'date-fns'
 
 import Actions from '../../actions'
 import styles from './style'
@@ -24,6 +26,8 @@ import config from '../../config'
 import HeaderBar from '../../components/HeaderBar'
 import Loading from '../../components/Loading'
 import effects from '../../../language/effects'
+import Tableau from '../../components/Tableau'
+import { preciseRound } from '../../lib/view-helpers'
 
 export default class AccountsView extends Component {
 
@@ -33,7 +37,8 @@ export default class AccountsView extends Component {
       showRenameModal: false,
       loadingTransactions: false,
       refreshing: false,
-      lastFetch: null
+      lastFetch: null,
+      showQRModal: false
     }
   }
 
@@ -155,6 +160,10 @@ export default class AccountsView extends Component {
     this.setState({ showRenameModal: !this.state.showRenameModal })
   }
 
+  toggleQRCode() {
+    this.setState({ showQRModal: !this.state.showQRModal })
+  }
+
   refresh() {
     this.setState({ refreshing: true })
   }
@@ -175,10 +184,49 @@ export default class AccountsView extends Component {
     )
   }
 
+  renderQRModal(address) {
+    return (
+      <Modal
+        visible={this.state.showQRModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => this.toggleQRCode()}
+        presentationStyle="overFullScreen"
+      >
+        <Button
+          transparent
+          onPress={() => this.toggleQRCode()}
+          small
+        >
+          <Icon
+            ios={`ios-close`}
+            android={`md-close`}
+            style={styles.qrModalCloseBtn}
+          />
+        </Button>
+        <View style={styles.qrModal}>
+          <QRCode
+            value={address}
+            logo={require('../../../android/app/src/main/res/mipmap-mdpi/ic_launcher.png')}
+            logoMargin={5}
+            size={300}
+          />
+        </View>
+      </Modal>
+    )
+  }
+
   renderTransaction(tx) {
     const amount = tx.startingBalance || tx.amount
     const effect = effects[tx.type]
     const { i18n } = this.context
+    const i18nVars = {
+      ...tx,
+      assetAbbreviation: tx.assetType === 'native' ? 'XLM' : tx.assetType
+    }
+
+    if (tx.from) i18nVars.truncFrom = `${tx.from.slice(0, 4)}...${tx.from.slice(-4)}`
+    if (tx.to) i18nVars.truncTo = `${tx.to.slice(0, 4)}...${tx.to.slice(-4)}`
     
     return (
       <ListItem avatar key={`tx-${tx.id}`}>
@@ -186,25 +234,39 @@ export default class AccountsView extends Component {
           <Icon name={effect.icon} />
         </Left>
         <Body>
-          <Text>{i18n.t(`effects.${tx.type}`)}</Text>
-          {amount ? (<Text note>{tx.startingBalance || tx.amount} XLM</Text>) : null}
+          <Text>{i18n.t(`effects.${tx.type}`, i18nVars)}</Text>
+          <Text note>
+            {distanceInWords(new Date(), tx.createdAt, { addSuffix: 'ago', includeSeconds: true })}
+          </Text>
         </Body>
+        <Right>
+          <Icon name="arrow-forward" />
+        </Right>
       </ListItem>
     )
   }
 
-  renderAssets(balances, assets) {
+  renderBalance(balances, assets) {
+    const { amount } = balances.find(({ asset }) => asset === 'native')
+    const { price_USD } = assets.find(({ domain }) => domain === 'native')
+    const fiatValue = amount ? amount * price_USD : 0
+
     return (
-      <List>
-        {balances.filter(balance => balance.amount > 0).map(balance => (
-          <ListItem key={`asset-${balance.asset}`}>
-            <Body>
-              <Text>{balance.amount} {balance.asset === 'native' ? 'XLM' : balance.asset}</Text>
-              <Text note>({this.showInFiat(balance, assets)})</Text>
-            </Body>
-          </ListItem>
-        ))}
-      </List>
+      <View style={styles.totalBalanceWriting}>
+        <Text
+          key="xlm-balance"
+          style={[ styles.inverseText, styles.balances, styles.centeredText ]}
+        >
+          {amount || 0} XLM
+        </Text>
+        <Text 
+          note
+          key="fiat-value"
+          style={[ styles.inverseText, styles.balances, styles.centeredText ]}
+        >
+          (${preciseRound(fiatValue)})
+        </Text>
+      </View>
     )
   }
 
@@ -232,22 +294,21 @@ export default class AccountsView extends Component {
             />
           }
         >
-          <H1>{account.title}</H1>
-          <H2>{i18n.t('accounts.balance')}</H2>
-          {this.renderAssets(account.balances, assets.data)}
-          <QRCode
-            value={account.address}
-            logo={require('../../../android/app/src/main/res/mipmap-mdpi/ic_launcher.png')}
-            logoMargin={5}
-            size={200}
-          />
+          <Tableau
+            buttonIcon="qr-scanner"
+            buttonOnPress={() => this.toggleQRCode()}
+          >
+            <H1 style={[ styles.inverseText, styles.centeredText ]}>{account.title}</H1>
+            {this.renderBalance(account.balances, assets.data)}
+          </Tableau>
           {account && account.txs.length > 0 ? (
             <List>
-              {account.txs.reverse().map(tx => this.renderTransaction(tx))}
+              {account.txs.map(tx => this.renderTransaction(tx))}
             </List>
           ) : (account.txLoaded ? <Text>{i18n.t('accounts.no_transactions')}</Text> : <Loading />)}
         </Content>
         {this.renderRenameModal(account.title)}
+        {this.renderQRModal(account.address)}
       </Container>
     )
   }

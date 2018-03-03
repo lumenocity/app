@@ -27,6 +27,14 @@ export default {
 
   },
 
+  onboard: {
+    header: 'Add Account',
+    new_caption: 'An account can be created for you on the Stellar network. It is free, but a small minimum balance of 5 XLM must be in the account for you to be able to use it.',
+    private_key_caption: 'An account is similar to a traditional bank\'s account in that it holds funds and allows you to send and receive them.',
+    existing_key_message: 'If you have an existing private key, you can input it here to load it into Interstellar.',
+    add_btn: 'Add account'
+  },
+
   accounts: {
     list_header: 'Accounts',
     view_header: 'Viewing',
@@ -52,6 +60,7 @@ export default {
     send_btn: 'Send',
     new_send_btn: 'New Transaction',
     view_on_stellarchain: 'View on StellarChain',
+
     status: {
       processing: 'processing',
       completed: 'completed'
@@ -60,15 +69,16 @@ export default {
 
   settings: {
     header: 'Settings',
+
     actions: {
       purge: 'Clear all data'
     }
   },
 
   effects: {
-    account_created: 'Account initialised',
-    signer_created: 'Account set up',
-    account_credited: 'Received funds'
+    create_account: 'Account initialised',
+    account_credited: 'Received {{amount}} {{assetAbbreviation}} from {{truncFrom}}',
+    account_debited: 'Sent {{amount}}{{assetAbbreviation}} to {{truncTo}}'
   },
 
   errors: {

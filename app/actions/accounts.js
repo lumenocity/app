@@ -60,16 +60,34 @@ export default {
 
   getTransactions: createAction('GET_TRANSACTIONS', async (server, address) => {
     try {
-      const { records } = await server.effects().forAccount(address).call()
-      const txs = records.map(effect => {
-        const formatted = { id: effect.id, type: effect.type }
+      const { records } = await server
+        .operations()
+        .forAccount(address)
+        .limit(100)
+        .order('desc')
+        .call()
 
-        if (effect.amount) formatted.amount = Number(effect.amount)
-        if (effect.asset_type) formatted.assetType = effect.asset_type
-        if (effect.starting_balance) formatted.startingBalance = Number(effect.starting_balance)
+      const txs = []
 
-        return formatted
-      })
+      for (const op of records) {
+        const formatted = {
+          id: op.id,
+          createdAt: op.created_at,
+          hash: op.transaction_hash
+        }
+
+        if (op.type === 'payment') {
+          const paidOut = op.source_account === address
+          formatted.type = `account_${paidOut ? 'debited' : 'credited'}`
+          formatted[paidOut ? 'to' : 'from'] = paidOut ? op.to : op.source_account
+        } else formatted.type = op.type
+
+        if (op.amount) formatted.amount = Number(op.amount)
+        if (op.asset_type) formatted.assetType = op.asset_type
+        if (op.starting_balance) formatted.startingBalance = Number(op.starting_balance)
+
+        txs.push(formatted)
+      }
 
       return { address, txs }
     } catch (error) {

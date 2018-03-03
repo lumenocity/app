@@ -1,6 +1,6 @@
 export default {
 
-  account_created: {
+  create_account: {
     icon: 'alert'
   },
 
@@ -9,7 +9,11 @@ export default {
   },
 
   account_credited: {
-    icon: 'log-in'
+    icon: 'trending-up'
+  },
+
+  account_debited: {
+    icon: 'trending-down'
   }
 
 }

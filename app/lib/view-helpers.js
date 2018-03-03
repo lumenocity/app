@@ -11,3 +11,8 @@ export const percentOfViewport = (percentageOrPoints, direction = 'width') => {
 
   return Math.round(viewport[direction] * percentage)
 }
+
+export const preciseRound = (number, precision = 2) => {
+  const factor = 10 ** precision
+  return Math.round(number * factor) / factor
+}

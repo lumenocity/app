@@ -33,11 +33,13 @@ export default class AddAccount extends Component {
   }
 
   render() {
+    const { i18n } = this.context
+
     return (
       <Modal visible={this.props.isVisible} onRequestClose={() => this.onRequestClose()}>
         <Container>
           <HeaderBar
-            title="Add account"
+            title={i18n.t('onboarding.header')}
             leftButton={this.props.canBeClosed}
             leftButtonIcon="arrow-back"
             leftButtonAction={() => this.props.closeDialog()}
@@ -46,18 +48,15 @@ export default class AddAccount extends Component {
             <Tabs initialPage={0}>
               <Tab heading="New">
                 <Text>
-                  An account can be created for you on the Stellar network. It is free, but 
-                  a small minimum balance of 5 XLM must be in the account for you to be able 
-                  to use it.
+                  {i18n.t('onboarding.new_caption')}
                 </Text>
               </Tab>
               <Tab heading="Add Via Private Key">
                 <Text>
-                  An account is similar to a traditional bank's account in that it holds funds 
-                  and allows you to send and receive them.
+                  {i18n.t('onboarding.private_key_caption')}
                 </Text>
                 <Text>
-                  If you have an existing private key, you can input it here to load it into Interstellar.
+                  {i18n.t('onboarding.existing_key_message')}
                 </Text>
                 <Form>
                   <Item>
@@ -70,7 +69,7 @@ export default class AddAccount extends Component {
                     block
                     onPress={() => this.props.onAddAccount(this.key)}
                   >
-                    <Text>Load Account</Text>
+                    <Text>{i18n.t('onboarding.add_btn')}</Text>
                   </Button>
                 </Form>
               </Tab>
@@ -80,6 +79,10 @@ export default class AddAccount extends Component {
       </Modal>
     )
   }
+}
+
+AddAccount.contextTypes = {
+  i18n: PropTypes.object
 }
 
 AddAccount.propTypes = {

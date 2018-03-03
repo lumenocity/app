@@ -6,6 +6,7 @@ import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
 import HeaderBar from '../../components/HeaderBar'
+import Tableau from '../../components/Tableau'
 
 export default class Accounts extends Component {
 
@@ -52,16 +53,15 @@ export default class Accounts extends Component {
     return (
       <ListItem
         key={`account-${account.address}`}
-        avatar
         onPress={() => this.gotoAccount(account.address)}
       >
-        <Left>
-          <Icon name="cube" />
-        </Left>
         <Body>
           <Text>{account.title} ({account.address.slice(0, 5)}...{account.address.slice(-5)})</Text>
           <Text note>{i18n.t('accounts.current_balance')} {amount || 0} XLM</Text>
         </Body>
+        <Right>
+          <Icon name="arrow-forward" />
+        </Right>
       </ListItem>
     )
   }
@@ -79,8 +79,12 @@ export default class Accounts extends Component {
           rightButtonAction={() => this.addAccount()}
         />
         <Content>
-          <H2>Total balance:</H2>
-          <H1>{this.totalBalance('native')} XLM</H1>
+          <Tableau>
+            <H2 style={[ styles.inverseText, styles.centeredText ]}>
+              {i18n.t('accounts.total_balance')}
+            </H2>
+            <H1>{this.totalBalance('native')} XLM</H1>
+          </Tableau>
           {accounts && accounts.data.length > 0 ? (
             <List>
               {accounts.data.map(account => this.renderAccount(account))}
