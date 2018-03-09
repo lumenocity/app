@@ -24,7 +24,9 @@ module.exports = {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": ["off"],
     "class-methods-use-this": ["off"],
-    "array-bracket-spacing": ["error", "always", { "objectsInArrays": false }]
+    "array-bracket-spacing": ["error", "always", { "objectsInArrays": false }],
+    "react/require-default-props": ["off"],
+    "object-curly-newline": ["off"]
   },
   "settings": {
     "import/resolver": {

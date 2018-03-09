@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions'
-import { Operation, Keypair } from 'stellar-sdk'
+import { Operation, Keypair, TransactionBuilder } from 'stellar-sdk'
 import randomName from 'project-name-generator'
 
 import config from '../config'
@@ -9,6 +9,7 @@ export default {
   generateKeys: createAction('GENERATE_KEYS', () => Keypair.random),
   toggleAdding: createAction('TOGGLE_ADDING_MODE'),
   select: createAction('SELECT_ACCOUNT'),
+  viewTransaction: createAction('VIEW_TRANSACTION'),
 
   create: createAction('CREATE_ACCOUNT', async (server, keys) => {
     try {
@@ -26,7 +27,7 @@ export default {
 
   load: createAction('GRAB_ACCOUNT', async (server, { address, secret }) => {
     try {
-      const accountAddress = (secret) ? Keypair.fromSecret(secret).publicKey() : address
+      const accountAddress = secret ? Keypair.fromSecret(secret) : address
       const account = await server.loadAccount(accountAddress)
       const title = randomName().raw.map(word => `${word[0].toUpperCase()}${word.slice(1)}`).join(' ')
 
@@ -42,6 +43,25 @@ export default {
       }
     } catch (error) {
       error.action = 'GRAB_ACCOUNT'
+      return error
+    }
+  }),
+
+  setInflation: createAction('SET_INFLATION', async (server, address, secret, target) => {
+    try {
+      const account = await server.loadAccount(address)
+      const op = Operation.setOptions({
+        inflationDest: target
+      })
+
+      const transaction = new TransactionBuilder(account).addOperation(op).build()
+      transaction.sign(Keypair.fromSecret(secret))
+
+      await server.submitTransaction(transaction)
+
+      return { address, target }
+    } catch (error) {
+      error.action = 'SET_INFLATION'
       return error
     }
   }),
@@ -73,17 +93,19 @@ export default {
         const formatted = {
           id: op.id,
           createdAt: op.created_at,
-          hash: op.transaction_hash
+          hash: op.transaction_hash,
+          status: 'completed'
         }
 
         if (op.type === 'payment') {
           const paidOut = op.source_account === address
           formatted.type = `account_${paidOut ? 'debited' : 'credited'}`
-          formatted[paidOut ? 'to' : 'from'] = paidOut ? op.to : op.source_account
+          formatted.to = paidOut ? op.to : op.source_account
+          formatted.from = paidOut ? op.source_account : op.to
         } else formatted.type = op.type
 
         if (op.amount) formatted.amount = Number(op.amount)
-        if (op.asset_type) formatted.assetType = op.asset_type
+        if (op.asset_type) formatted.asset = op.asset_type
         if (op.starting_balance) formatted.startingBalance = Number(op.starting_balance)
 
         txs.push(formatted)
@@ -100,10 +122,11 @@ export default {
     username, account, domain = config.federationDomain
   ) => {
     try {
-      const endpoint = `${config.federationApi}/addresses`
+      const endpoint = `${config.federationApi}/addresses/`
       const request = await fetch(endpoint, {
+        method: 'POST',
+        credentials: 'include',
         headers: {
-          method: 'POST',
           Authorization: `Token ${config.federationApiKey}`,
           'Content-Type': 'application/json'
         },
@@ -124,7 +147,7 @@ export default {
         throw new Error('REQUEST_FAILED')
       }
 
-      return { account, federatedAddress: response.fulladdress }
+      return { address: account, federatedAddress: response.fulladdress }
     } catch (error) {
       error.action = 'FEDERATE_ACCOUNT'
       return error

@@ -17,22 +17,47 @@ export default {
       },
       asset_amount: {
         placeholder: 'Enter amount (ie. 55)'
+      },
+      inflation_pools: {
+        placeholder: 'Select a pool'
       }
     },
 
     common: {
       close: 'Close',
-      status: 'Status'
+      status: 'Status',
+      date: 'MMMM D, YYYY @ H:mm',
+      inflation_address: 'Inflation pool address',
+      federated_address: 'Federated address',
+      account_address: 'Account address'
     }
 
   },
 
-  onboard: {
+  onboarding: {
     header: 'Add Account',
-    new_caption: 'An account can be created for you on the Stellar network. It is free, but a small minimum balance of 5 XLM must be in the account for you to be able to use it.',
-    private_key_caption: 'An account is similar to a traditional bank\'s account in that it holds funds and allows you to send and receive them.',
-    existing_key_message: 'If you have an existing private key, you can input it here to load it into Interstellar.',
-    add_btn: 'Add account'
+    segment_existing_account: 'Import Existing',
+    about_import: `An account is similar to a traditional bank's account in that it holds funds and allows you to send and receive them.
+
+Please add the secret (private key) for the account here, using text input or a QR code scanner.`,
+    add_btn: 'Import account',
+    federate_btn: 'Create federated address',
+    set_inflation_btn: 'Set inflation pool',
+    finalise_btn: 'Done',
+    about_federation: `
+Normal Stellar account addresses are 56 characters, and are made up of random letters and numbers. This makes it pretty difficult to send funds around!
+
+But luckily, there's a solution - it's called "federation". Federation allows you to alias your 56-character address to something easier to remember. This is called your "federated address": these take the format similar to email and look like this:
+
+    fiiv*lumenocity.io
+    
+Lumenocity has its own federated address service, lumenocity.io. You can choose a username to use for the first part. A username must be made up of only letters or numbers.`,
+    about_inflation: `On the Stellar network, a tiny fee is paid for each transaction. The Stellar organisation redestributes this amount to users about once a week in a process called "inflation".
+
+But to take advantage of it, you need to be voted for by other users. Ordinary people tend not to be able to get enough votes, but there is a way to collect it anyways - by nominating someone else to collect them for you, then forward them to you. This is called an "inflation pool".
+
+To take advantage of this, please select a pool below - these are community-run. Lumenocity recommends Lumenaut since it has 0 fees!`,
+    finalise: 'Account import is done! Here are your details:'
   },
 
   accounts: {
@@ -75,10 +100,21 @@ export default {
     }
   },
 
+  transaction: {
+    header: 'Transaction',
+    no_hash: 'Awaiting transaction ID',
+    effects: {
+      create_account: 'Account initialised',
+      account_credited: 'Received {{amount}} {{assetAbbreviation}}',
+      account_debited: 'Sent {{amount}} {{assetAbbreviation}}',
+      set_options: 'Changed preferences'
+    }
+  },
+
   effects: {
     create_account: 'Account initialised',
     account_credited: 'Received {{amount}} {{assetAbbreviation}} from {{truncFrom}}',
-    account_debited: 'Sent {{amount}}{{assetAbbreviation}} to {{truncTo}}'
+    account_debited: 'Sent {{amount}} {{assetAbbreviation}} to {{truncTo}}'
   },
 
   errors: {

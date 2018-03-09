@@ -26,8 +26,14 @@ import config from '../../config'
 import HeaderBar from '../../components/HeaderBar'
 import Loading from '../../components/Loading'
 import effects from '../../../language/effects'
-import Tableau from '../../components/Tableau'
+import Tableau, { styling as TableauStyle } from '../../components/Tableau'
 import { preciseRound } from '../../lib/view-helpers'
+
+const SHOW_TYPES = [
+  'create_account',
+  'account_credited',
+  'account_debited'
+]
 
 export default class AccountsView extends Component {
 
@@ -168,6 +174,11 @@ export default class AccountsView extends Component {
     this.setState({ refreshing: true })
   }
 
+  gotoTransaction(hash) {
+    this.context.store.dispatch(Actions.Accounts.viewTransaction(hash))
+    this.props.navigation.navigate('TransactionView')
+  }
+
   renderRenameModal(oldTitle) {
     return (
       <Modal
@@ -222,14 +233,17 @@ export default class AccountsView extends Component {
     const { i18n } = this.context
     const i18nVars = {
       ...tx,
-      assetAbbreviation: tx.assetType === 'native' ? 'XLM' : tx.assetType
+      assetAbbreviation: tx.asset === 'native' ? 'XLM' : tx.asset
     }
 
     if (tx.from) i18nVars.truncFrom = `${tx.from.slice(0, 4)}...${tx.from.slice(-4)}`
     if (tx.to) i18nVars.truncTo = `${tx.to.slice(0, 4)}...${tx.to.slice(-4)}`
     
     return (
-      <ListItem avatar key={`tx-${tx.id}`}>
+      <ListItem
+        avatar
+        key={`tx-${tx.id}`}
+        onPress={() => this.gotoTransaction(tx.hash)}>
         <Left>
           <Icon name={effect.icon} />
         </Left>
@@ -255,14 +269,14 @@ export default class AccountsView extends Component {
       <View style={styles.totalBalanceWriting}>
         <Text
           key="xlm-balance"
-          style={[ styles.inverseText, styles.balances, styles.centeredText ]}
+          style={[ TableauStyle.inverseText, TableauStyle.subText, TableauStyle.centeredText ]}
         >
           {amount || 0} XLM
         </Text>
         <Text 
           note
           key="fiat-value"
-          style={[ styles.inverseText, styles.balances, styles.centeredText ]}
+          style={[ TableauStyle.inverseText, TableauStyle.subText, TableauStyle.centeredText ]}
         >
           (${preciseRound(fiatValue)})
         </Text>
@@ -274,6 +288,7 @@ export default class AccountsView extends Component {
     const account = this.currentAccount()
     const { assets } = this.context.store.getState()
     const { i18n } = this.context
+    const txs = account.txs.filter(tx => SHOW_TYPES.indexOf(tx.type) > -1)
 
     return (
       <Container>
@@ -298,12 +313,16 @@ export default class AccountsView extends Component {
             buttonIcon="qr-scanner"
             buttonOnPress={() => this.toggleQRCode()}
           >
-            <H1 style={[ styles.inverseText, styles.centeredText ]}>{account.title}</H1>
+            <H1
+              style={[ TableauStyle.inverseText, TableauStyle.centeredText ]}
+            >
+              {account.federatedAddress || account.title}
+            </H1>
             {this.renderBalance(account.balances, assets.data)}
           </Tableau>
-          {account && account.txs.length > 0 ? (
+          {account && txs.length > 0 ? (
             <List>
-              {account.txs.map(tx => this.renderTransaction(tx))}
+              {txs.map(tx => this.renderTransaction(tx))}
             </List>
           ) : (account.txLoaded ? <Text>{i18n.t('accounts.no_transactions')}</Text> : <Loading />)}
         </Content>

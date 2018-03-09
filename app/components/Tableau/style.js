@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 const { width: viewportWidth } = Dimensions.get('window')
 
 export default StyleSheet.create({
-  totalBalanceContainer: {
+  container: {
     paddingTop: 20,
     paddingBottom: 40
   },
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
 
-  totalBalanceWriting: {
+  bigText: {
     paddingTop: 20,
     paddingBottom: 20
   },
@@ -21,28 +21,14 @@ export default StyleSheet.create({
     color: 'white'
   },
 
-  balances: {
+  subText: {
     fontWeight: 'bold',
     fontSize: 20
   },
 
-  qrButton: {
+  button: {
     color: 'white',
     position: 'relative',
     left: viewportWidth - 50
-  },
-
-  qrModal: {
-    backgroundColor: 'white',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  qrModalCloseBtn: {
-    color: 'black',
-    position: 'relative',
-    left: viewportWidth - 50,
-    top: 20
   }
 })

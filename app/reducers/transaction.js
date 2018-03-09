@@ -5,7 +5,7 @@ export default (state = transaction, action) => {
     case 'CLEAR_LAST_TRANSACTION':
       return { ...transaction }
     case 'INIT':
-      return { ...state, status: 'processing', submittedAt: new Date() }
+      return { ...state, status: 'processing', createdAt: new Date(), type: 'account_debited' }
     case 'SEND_FUNDS':
       return { ...state, status: 'completed', hash: action.payload.hash }
     case 'SET_TRANSACTION_PARAM':

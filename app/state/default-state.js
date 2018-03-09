@@ -4,7 +4,8 @@ export const accounts = {
   data: [],
   selected: null,
   loaded: false,
-  adding: true
+  adding: true,
+  selectedTransaction: null
 }
 export const transaction = {
   status: null,
@@ -13,6 +14,7 @@ export const transaction = {
   from: null,
   to: null,
   memo: null,
-  submittedAt: null,
-  hash: null
+  createdAt: null,
+  hash: null,
+  type: null
 }

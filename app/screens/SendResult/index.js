@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import Actions from '../../actions'
 import styles from './style'
 import HeaderBar from '../../components/HeaderBar'
+import Transaction from '../../components/Transaction'
 
 export default class SendResult extends Component {
 
@@ -45,20 +46,14 @@ export default class SendResult extends Component {
 
     return (
       <Container>
-        <HeaderBar title={i18n.t('send.status_header')} />
+        <HeaderBar
+          title={i18n.t('send.status_header')}
+          leftButton={transaction.status === 'completed'}
+          leftButtonIcon="arrow-back"
+          leftButtonAction={() => this.newTransaction()}
+        />
         <Content>
-          <H1>{i18n.t('accounts.actions.send')}</H1>
-          <Text>{i18n.t('ui.common.status')} {i18n.t(`send.status.${transaction.status}`)}</Text>
-          <Button
-            onPress={() => this.viewTransaction()}
-          >
-            <Text>{i18n.t('send.view_on_stellarchain')}</Text>
-          </Button>
-          <Button
-            onPress={() => this.newTransaction()}
-          >
-            <Text>{i18n.t('send.new_send_btn')}</Text>
-          </Button>
+          <Transaction {...transaction} i18n={i18n} />
         </Content>
       </Container>
     )

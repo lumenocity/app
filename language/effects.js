@@ -14,6 +14,14 @@ export default {
 
   account_debited: {
     icon: 'trending-down'
+  },
+
+  set_options: {
+    icon: 'cog'
+  },
+
+  fallback: {
+    icon: 'swap'
   }
 
 }

@@ -3,6 +3,7 @@ package com.lumenocity;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -29,12 +30,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNTextInputMaskPackage(),
             new LinearGradientPackage(),
             new RNCameraPackage(),
             new RNI18nPackage(),
             new ReactNativeConfigPackage(),
-            new SvgPackage(),
-            new RNCameraPackage()
+            new SvgPackage()
       );
     }
 

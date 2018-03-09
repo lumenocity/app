@@ -4,6 +4,8 @@ import { Input, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 
+import style from './style'
+
 class InputAddress extends Component {
   constructor() {
     super()
@@ -29,27 +31,34 @@ class InputAddress extends Component {
     return (
       <QRCodeScanner
         onRead={({ data }) => this.onUpdateValue(data)}
+        showMarker
       />
     )
   }
 
   render() {
+    const { i18n } = this.context
+
     return (
-      <View>
+      <View style={style.container}>
         {this.state.qrCodeScannerOpen ? this.renderScanner() : null}
-        <Input
-          value={this.state.value}
-          placeholder="Enter address"
-          onChangeText={address => this.onUpdateValue(address)}
-        />
-        <Button
-          onPress={() => this.toggleScanner()}
-        >
-          <Icon
-            ios="ios-qr-scanner"
-            android="md-qr-scanner"
+        <View style={style.textBox}>
+          <Input
+            value={this.state.value}
+            placeholder={i18n.t('ui.inputs.stellar_address.placeholder')}
+            onChangeText={address => this.onUpdateValue(address)}
           />
-        </Button>
+        </View>
+        <View style={style.qrButton}>
+          <Button
+            onPress={() => this.toggleScanner()}
+          >
+            <Icon
+              ios="ios-qr-scanner"
+              android="md-qr-scanner"
+            />
+          </Button>
+        </View>
       </View>
     )
   }

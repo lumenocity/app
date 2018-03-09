@@ -3,10 +3,16 @@ import { Header, Right, Left, Body, Title, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import { Platform } from 'react-native'
 
+import config from '../../config'
+
 const buttonStyle = Platform.OS === 'android' ? { color: 'white' } : {}
 
 const HeaderBar = props => (
-  <Header>
+  <Header
+    backgroundColor={config.colors.brand}
+    iosBarStyle="dark-content"
+    androidStatusBarColor={config.colors.brand}
+  >
     <Left>
       {props.leftButton ? (
         <Button

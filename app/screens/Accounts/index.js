@@ -4,6 +4,7 @@ import AccountsList from '../AccountsList'
 import AccountView from '../AccountView'
 import AccountHelp from '../AccountHelp'
 import AccountFederate from '../AccountFederate'
+import TransactionView from '../TransactionView'
 
 export default StackNavigator(
   {
@@ -18,6 +19,9 @@ export default StackNavigator(
     },
     Federate: {
       screen: AccountFederate
+    },
+    TransactionView: {
+      screen: TransactionView
     }
   },
   {

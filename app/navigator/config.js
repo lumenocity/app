@@ -22,7 +22,8 @@ export default routes => ({
     activeTintColor: Platform.OS === 'ios' ? config.colors.brand : 'white',
     showIcon: true,
     allowFontScaling: false,
-    labelStyle: { fontSize: Platform.OS === 'ios' ? 12 : 9 }
+    labelStyle: { fontSize: Platform.OS === 'ios' ? 12 : 9 },
+    inactiveBackgroundColor: 'white'
   },
 
   tabBarPosition: 'bottom',

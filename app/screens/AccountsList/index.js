@@ -6,7 +6,7 @@ import Actions from '../../actions'
 import styles from './style'
 import config from '../../config'
 import HeaderBar from '../../components/HeaderBar'
-import Tableau from '../../components/Tableau'
+import Tableau, { styling as TableauStyle } from '../../components/Tableau'
 
 export default class Accounts extends Component {
 
@@ -56,7 +56,9 @@ export default class Accounts extends Component {
         onPress={() => this.gotoAccount(account.address)}
       >
         <Body>
-          <Text>{account.title} ({account.address.slice(0, 5)}...{account.address.slice(-5)})</Text>
+          <Text>
+            {account.federatedAddress || account.title}
+          </Text>
           <Text note>{i18n.t('accounts.current_balance')} {amount || 0} XLM</Text>
         </Body>
         <Right>
@@ -80,10 +82,18 @@ export default class Accounts extends Component {
         />
         <Content>
           <Tableau>
-            <H2 style={[ styles.inverseText, styles.centeredText ]}>
+            <H1 style={[ TableauStyle.inverseText, TableauStyle.centeredText ]}>
               {i18n.t('accounts.total_balance')}
+            </H1>
+            <H2
+              style={[
+                TableauStyle.inverseText,
+                TableauStyle.subText,
+                TableauStyle.centeredText
+              ]}
+            >
+              {this.totalBalance('native')} XLM
             </H2>
-            <H1>{this.totalBalance('native')} XLM</H1>
           </Tableau>
           {accounts && accounts.data.length > 0 ? (
             <List>

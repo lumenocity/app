@@ -17,6 +17,8 @@ export default (state = accounts, action) => {
       return { ...state, adding: !state.adding }
     case 'SELECT_ACCOUNT':
       return { ...state, selected: action.payload }
+    case 'VIEW_TRANSACTION':
+      return { ...state, selectedTransaction: action.payload }
     case 'CLEAR_LOADED_INDICATORS':
       return {
         ...state,
@@ -56,6 +58,14 @@ export default (state = accounts, action) => {
       const data = state.data.map(account => {
         if (account.address !== action.payload.address) return account
         return { ...account, federatedAddress: action.payload.federatedAddress }
+      })
+
+      return { ...state, data }
+    }
+    case 'SET_INFLATION': {
+      const data = state.data.map(account => {
+        if (account.address !== action.payload.address) return account
+        return { ...account, inflation: action.payload.target }
       })
 
       return { ...state, data }
