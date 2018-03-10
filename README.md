@@ -12,17 +12,18 @@ So here's what we've got:
  * Federation w/ the lumenocity.io server (you*lumenocity.io)
  * Setting up an inflation pool, with a few popular inflation pools built in for ease of use
  * Name your accounts so that they are easier to keep track of
- * Sending XLM to any other address, including federated ones
  * QR codes can be used to export your keys, send your address to a friend or to pay your friend
+ * [Fund/invite an account/user](https://github.com/lumenocity/app/issues/12)
 
 ## Roadmap
 
 This is a big project. I started this in February and the aim was to get an app in the app stores for the judging phase of the Build Challenge on March 15th. But here's a sampling of what's coming:
 
- * Push notifications for transactions to/from your accounts in the app
- * Complete support for all assets on StellarTerm - this means showing them but also the ability to send and receive them
- * Send funds to anyone via email - they will get an email prompting them to collect your sent assets
- * Integration with the contact list on the phone, allowing you to set Stellar addresses to them
+ * [Push notifications for transactions to/from your accounts in the app](https://github.com/lumenocity/app/issues/9)
+ * [Complete support for all assets on StellarTerm - this means showing them but also the ability to send and receive them](https://github.com/lumenocity/app/issues/10)
+ * [Send funds to anyone via email - they will get an email prompting them to collect your sent assets](https://github.com/lumenocity/app/issues/8)
+ * [Integration with the contact list on the phone, allowing you to set Stellar addresses to them](https://github.com/lumenocity/app/issues/11)
+ * [Fund/invite an account/user](https://github.com/lumenocity/app/issues/12)
 
 ## Who made this?
 
