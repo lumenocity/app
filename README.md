@@ -30,3 +30,20 @@ I am [@mtimofiiv](https://fiiv.io) and I am building this project. I've been wor
 
 If you're interested in contributing, please don't hesitate to get in touch, I'd love the help ;)
 
+## Contributing
+
+If you want to improve this software, I'd welcome the contribution! Submit an issue or a PR!
+
+## A note on using Haul instead of Metro packager
+
+This project uses the [Haul packager](https://github.com/callstack/haul) instead of the customary [Metro](https://facebook.github.io/metro/) that comes standard with React Native. The reason is that Lumenocity uses the [Stellar JS SDK](https://github.com/stellar/js-stellar-sdk) (to manage communications with the Horizon API), and its dependency graph involves several environment-dependent modules (such as in Node, it will use the `vm` module). These are fundamental to the SDK since they handle a lot of the cryptographic functions under the hood.
+
+Where it causes problems is that Metro thinks it should bundle Node.js modules such as `vm` instead of using the fallbacks. If someone can help with this problem, I'd love to hear from you! But in the meantime, Haul it is!
+
+## Running
+
+ * `yarn start:[android|ios]` will start the bundling process for a given platform
+ * `yarn ios` does an iOS build and deploys it to either Xcode's simulator or a connected device
+ * `yarn android` does an Android build and deploys it to any running devices
+ * `yarn build:android` does a signed Android build
+ * `yarn generate:key` creates signing keys for use with Android's signed builds
