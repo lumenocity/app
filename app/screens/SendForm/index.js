@@ -92,7 +92,7 @@ export default class SendForm extends Component {
               defaultValue={i18n.t('ui.inputs.account_picker.placeholder')}
               options={accounts.data}
               onSelect={({ address }) => this.updateTxField({ from: address })}
-              renderRow={({ title }) => <Text>{title}</Text>}
+              renderRow={({ title, federatedAddress }) => <Text>{federatedAddress || title}</Text>}
               renderButtonText={({ title }) => title}
               style={style.dropdownContainer}
               textStyle={style.dropdownText}

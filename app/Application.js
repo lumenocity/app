@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-import { Root } from 'native-base'
+import { Root, StyleProvider } from 'native-base'
 import PropTypes from 'prop-types'
 
+import getTheme from '../native-base-theme/components'
 import { persistor, store } from './state/store'
 import Actions from './actions'
 import Loading from './components/Loading'
@@ -12,6 +13,7 @@ import AddAccount from './screens/AddAccount'
 import Network from './lib/stellar-network'
 import config from './config'
 import i18n from '../i18n'
+import theme from './theme'
 
 const onBeforeLift = () => {
   store.dispatch(Actions.Session.initSession())
@@ -71,7 +73,9 @@ class Application extends Component {
               canBeClosed={!this.noAccountYet()}
               closeDialog={() => this.toggleAddDialog()}
             />
-            <Navigator />
+            <StyleProvider style={getTheme()}>
+              <Navigator />
+            </StyleProvider>
           </Root>
         </PersistGate>
       </Provider>

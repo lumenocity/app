@@ -52,12 +52,41 @@ export default class AccountsView extends Component {
     const { i18n } = this.context
 
     return [
-      { text: i18n.t('accounts.actions.send'), icon: 'send', iconColor: config.colors.brand },
-      { text: i18n.t('accounts.actions.inflation'), icon: 'git-compare', iconColor: config.colors.brand },
-      { text: i18n.t('accounts.actions.federate'), icon: 'person', iconColor: config.colors.brand },
-      { text: i18n.t('accounts.actions.rename'), icon: 'swap', iconColor: config.colors.brand },
-      { text: i18n.t('accounts.actions.wut'), icon: 'help', iconColor: config.colors.brand },
-      { text: i18n.t('ui.common.close'), icon: 'close', iconColor: 'red' }
+      { 
+        action: 'send',
+        text: i18n.t('accounts.actions.send'),
+        icon: 'send',
+        iconColor: config.colors.brand
+      },
+      {
+        action: 'inflation',
+        text: i18n.t('accounts.actions.inflation'),
+        icon: 'git-compare',
+        iconColor: config.colors.brand
+      },
+      {
+        action: 'federate',
+        text: i18n.t('accounts.actions.federate'),
+        icon: 'person',
+        iconColor: config.colors.brand
+      },
+      {
+        action: 'rename',
+        text: i18n.t('accounts.actions.rename'),
+        icon: 'swap',
+        iconColor: config.colors.brand
+      },
+      {
+        action: 'help',
+        text: i18n.t('accounts.actions.wut'),
+        icon: 'help',
+        iconColor: config.colors.brand
+      },
+      {
+        text: i18n.t('ui.common.close'),
+        icon: 'close',
+        iconColor: 'red'
+      }
     ]
   }
 
@@ -150,15 +179,15 @@ export default class AccountsView extends Component {
     }, buttonIndex => this.actionMenuButtonClicked(buttons[buttonIndex]))
   }
 
-  actionMenuButtonClicked({ text }) {
-    switch (text) {
-      case 'Email my payment address':
-      case 'Set up inflation':
-        alert(`You clicked: ${text}`)
+  actionMenuButtonClicked({ action }) {
+    switch (action) {
+      case 'send':
+      case 'inflation':
+        alert(`You clicked: ${action}`)
       break
-      case 'Federate address': return this.props.navigation.navigate('Federate')
-      case 'Rename account': return this.toggleRenameAccount()
-      case 'What are these?': return this.props.navigation.navigate('AccountHelp')
+      case 'federate': return this.props.navigation.navigate('Federate')
+      case 'rename': return this.toggleRenameAccount()
+      case 'help': return this.props.navigation.navigate('AccountHelp')
     }
   }
 

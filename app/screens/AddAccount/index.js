@@ -12,7 +12,6 @@ import {
   Left
 } from 'native-base'
 import PropTypes from 'prop-types'
-import Accordion from 'react-native-collapsible/Accordion'
 import TextInputMask from 'react-native-text-input-mask'
 import { Keypair } from 'stellar-sdk'
 import ModalDropdown from 'react-native-modal-dropdown'
@@ -22,6 +21,7 @@ import HeaderBar from '../../components/HeaderBar'
 import InputAddress from '../../components/InputAddress'
 import config from '../../config'
 import Actions from '../../actions'
+import Accordion from '../../components/Accordion'
 
 import { WALLET_SECRET } from '../../../fixtures/testnet'
 
@@ -30,10 +30,17 @@ export default class AddAccount extends Component {
     super()
     this.state = {
       step: 0,
+      skipped: [],
+
       privateKey: WALLET_SECRET,
       address: null,
+      importing: false,
+
       federatedAddress: null,
-      inflationAddress: null
+      federating: false,
+
+      inflationAddress: null,
+      inflating: false
     }
   }
 
@@ -49,16 +56,16 @@ export default class AddAccount extends Component {
     const { accounts } = this.context.store.getState()
     const account = accounts.data.find(({ address }) => address === this.state.address)
 
-    if (this.state.step === 0 && account) {
-      this.setState({ step: 1 })
+    if (this.state.importing && account) {
+      this.setState({ step: 1, importing: false })
     }
 
-    if (this.state.step === 1 && account && account.federatedAddress) {
-      this.setState({ step: 2 })
+    if (this.state.federating && account.federatedAddress) {
+      this.setState({ step: 2, federating: false })
     }
 
-    if (this.state.step === 2 && account && account.inflation) {
-      this.setState({ step: 3 })
+    if (this.state.inflating && account.inflation) {
+      this.setState({ step: 3, inflating: false })
     }
 
     this.forceUpdate()
@@ -70,7 +77,7 @@ export default class AddAccount extends Component {
 
   importAccount() {
     const address = Keypair.fromSecret(this.state.privateKey).publicKey()
-    this.setState({ address })
+    this.setState({ address, importing: true })
 
     this.context.store.dispatch(Actions.Accounts.load(
       this.context.network,
@@ -79,6 +86,7 @@ export default class AddAccount extends Component {
   }
 
   federateAccount() {
+    this.setState({ federating: true })
     this.context.store.dispatch(Actions.Accounts.federate(
       this.state.federatedAddress,
       this.state.address
@@ -86,6 +94,7 @@ export default class AddAccount extends Component {
   }
 
   addInflation() {
+    this.setState({ inflating: true })
     this.context.store.dispatch(Actions.Accounts.setInflation(
       this.context.network,
       this.state.address,
@@ -98,26 +107,11 @@ export default class AddAccount extends Component {
     this.props.closeDialog()
   }
 
-  renderHeader(section, index, isActive) {
-    return (
-      <View style={style.accordionHeader}>
-        <Icon
-          style={style.accordionHeaderIcon}
-          name={isActive ? 'arrow-down' : 'arrow-forward'}
-        />
-        <Text style={style.accordionHeaderText}>{section.title}</Text>
-        {this.state.step > index ? (
-          <Icon
-            style={style.accordionHeaderCheckmark}
-            name="checkmark-circle"
-          />
-        ) : null}
-      </View>
-    )
-  }
+  skip() {
+    const step = this.state.step + 1
+    const skipped = this.state.skipped.concat([ this.state.step ])
 
-  renderContent(section) {
-    return section.content
+    this.setState({ skipped, step })
   }
 
   renderImportKey() {
@@ -151,11 +145,16 @@ export default class AddAccount extends Component {
           onChangeText={(formatted, extracted) => {
             this.setState({ federatedAddress: extracted.trim().toLowerCase() })
           }}
-          mask="[___-----------------------------]{lumenocity}"
+          mask="[___-----------------------------]{*lumenocity.io}"
         />
         <Button
+          onPress={() => this.skip()}
+          bordered
+        >
+          <Text>{i18n.t('onboarding.skip_btn')}</Text>
+        </Button>
+        <Button
           onPress={() => this.federateAccount()}
-          block
         >
           <Text>{i18n.t('onboarding.federate_btn')}</Text>
         </Button>
@@ -179,6 +178,12 @@ export default class AddAccount extends Component {
           textStyle={style.dropdownText}
           dropdownStyle={style.dropdownStyle}
         />
+        <Button
+          onPress={() => this.skip()}
+          bordered
+        >
+          <Text>{i18n.t('onboarding.skip_btn')}</Text>
+        </Button>
         <Button
           onPress={() => this.addInflation()}
           block
@@ -240,10 +245,20 @@ export default class AddAccount extends Component {
     )
   }
 
+  renderRightIcon(index) {
+    if (this.state.step <= index) return null
+    const isSkipped = this.state.skipped.indexOf(index) > -1
+    
+    return (
+      <Icon
+        style={isSkipped ? style.accordionHeaderSkipped : style.accordionHeaderCheckmark}
+        name={isSkipped ? 'alert' : 'checkmark-circle'}
+      />
+    )
+  }
+
   render() {
     const { i18n } = this.context
-
-    console.log(this.state)
 
     return (
       <Modal visible={this.props.isVisible} onRequestClose={() => this.props.closeDialog()}>
@@ -256,17 +271,15 @@ export default class AddAccount extends Component {
           />
           <Content>
             <Accordion
+              activeSection={this.state.step}
               sections={[
                 { title: 'Import your account', content: this.renderImportKey() },
                 { title: 'Federation', content: this.renderFederation() },
                 { title: 'Inflation', content: this.renderInflation() },
                 { title: 'Finalise', content: this.renderFinal() }
               ]}
-              renderHeader={(...params) => this.renderHeader(...params)}
-              renderContent={section => section.content}
-              activeSection={this.state.step}
               onChange={step => this.setState({ step })}
-              underlayColor="white"
+              rightIcon={step => this.renderRightIcon(step)}
               disabled
             />
           </Content>

@@ -1,3 +1,5 @@
+import long from './en-long'
+
 export default {
 
   ui: {
@@ -37,26 +39,14 @@ export default {
   onboarding: {
     header: 'Add Account',
     segment_existing_account: 'Import Existing',
-    about_import: `An account is similar to a traditional bank's account in that it holds funds and allows you to send and receive them.
-
-Please add the secret (private key) for the account here, using text input or a QR code scanner.`,
+    about_import: long.onboardingImport,
     add_btn: 'Import account',
+    skip_btn: 'Skip this',
     federate_btn: 'Create federated address',
     set_inflation_btn: 'Set inflation pool',
     finalise_btn: 'Done',
-    about_federation: `
-Normal Stellar account addresses are 56 characters, and are made up of random letters and numbers. This makes it pretty difficult to send funds around!
-
-But luckily, there's a solution - it's called "federation". Federation allows you to alias your 56-character address to something easier to remember. This is called your "federated address": these take the format similar to email and look like this:
-
-    fiiv*lumenocity.io
-    
-Lumenocity has its own federated address service, lumenocity.io. You can choose a username to use for the first part. A username must be made up of only letters or numbers.`,
-    about_inflation: `On the Stellar network, a tiny fee is paid for each transaction. The Stellar organisation redestributes this amount to users about once a week in a process called "inflation".
-
-But to take advantage of it, you need to be voted for by other users. Ordinary people tend not to be able to get enough votes, but there is a way to collect it anyways - by nominating someone else to collect them for you, then forward them to you. This is called an "inflation pool".
-
-To take advantage of this, please select a pool below - these are community-run. Lumenocity recommends Lumenaut since it has 0 fees!`,
+    about_federation: long.onboardingFederation,
+    about_inflation: long.onboardingInflation,
     finalise: 'Account import is done! Here are your details:'
   },
 
@@ -77,6 +67,16 @@ To take advantage of this, please select a pool below - these are community-run.
       rename: 'Rename account',
       wut: 'What is this?'
     }
+  },
+
+  account_help: {
+    header: 'Help',
+    federation_header: 'Federated addresses',
+    federation_explanation: long.accountHelpFederation,
+    inflation_header: 'What is "inflation"?',
+    inflation_explanation: long.accountHelpInflation,
+    rename_header: 'Renaming your account',
+    rename_explanation: long.accountHelpRename
   },
 
   send: {

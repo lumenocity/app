@@ -8,6 +8,7 @@ In v1, the aim is to make a minimal viable product. There's a lot of features st
 
 So here's what we've got:
 
+ * Full support for internationalisation
  * Multiple accounts
  * Federation w/ the lumenocity.io server (you*lumenocity.io)
  * Setting up an inflation pool, with a few popular inflation pools built in for ease of use

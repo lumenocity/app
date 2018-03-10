@@ -1,27 +1,59 @@
-import React from 'react'
-import { Container, Content, Text, H1 } from 'native-base'
+import React, { Component } from 'react'
+import { Container, Content, Text } from 'native-base'
+import { View } from 'react-native'
+import PropTypes from 'prop-types'
 
-import styles from './style'
+import style from './style'
 import HeaderBar from '../../components/HeaderBar'
+import Accordion from '../../components/Accordion'
 
-export default props => (
-  <Container>
-    <HeaderBar
-      title="Help"
-      leftButton
-      leftButtonIcon="arrow-back"
-      leftButtonAction={() => props.navigation.goBack()}
-    />
-    <Content>
-      <H1>Account federation</H1>
-      <Text>On the Stellar network, accounts are given a very long and hard to remember identifier. But luckily, there is another way! You can claim a more human readable address that is similar to an email, which works just as well!</Text>
-      <Text>Lumenocity offers you the use of our federation server, so you can have an address like me*lumenocity.io!</Text>
-      <H1>Inflation</H1>
-      <Text>The Stellar network charges a small fee on each transaction. But it does not keep those funds - instead it re-distributes that amount back to its users automatically, and it does so depending on how many XLM you currently hold. The only catch is that other users have to vote for you to get them before you can!</Text>
-      <Text>But since it is a difficult task to get thousands of people to willingly vote, several inflation pools have been made by the community. These pools allow you to vote for them to receive the inflation amount, which they then pay back to you to your account.</Text>
-      <Text>The terms vary between pools, but for example Lumenaut is a pool that has 0 fees, so it will give you 100% of your entitled inflation amount, provided you configure it to be your inflation vote.</Text>
-      <H1>Renaming your account</H1>
-      <Text>A name for the account is more something for you – it is only stored in this app. For example, you can name your account CHEQUING or SAVINGS or whatever you want! This is purely for you to help organise.</Text>
-    </Content>
-  </Container>
-)
+export default class AccountHelp extends Component {
+  goBack() {
+    this.props.navigation.goBack()
+  }
+
+  helpContent(text) {
+    return (
+      <View style={style.helpContent}>
+        <Text>{text}</Text>
+      </View>
+    )
+  }
+
+  render() {
+    const { i18n } = this.context
+
+    return (
+      <Container style={style.container}>
+        <HeaderBar
+          title={i18n.t('account_help.header')}
+          leftButton
+          leftButtonIcon="arrow-back"
+          leftButtonAction={() => this.goBack()}
+        />
+        <Content>
+          <Accordion
+            sections={[
+              {
+                title: i18n.t('account_help.federation_header'),
+                content: this.helpContent(i18n.t('account_help.federation_explanation'))
+              },
+              {
+                title: i18n.t('account_help.inflation_header'),
+                content: this.helpContent(i18n.t('account_help.inflation_explanation'))
+              },
+              {
+                title: i18n.t('account_help.rename_header'),
+                content: this.helpContent(i18n.t('account_help.rename_explanation'))
+              }
+            ]}
+          />
+        </Content>
+      </Container>
+    )
+  }
+}
+
+AccountHelp.contextTypes = {
+  i18n: PropTypes.object.isRequired
+}

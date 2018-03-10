@@ -1,6 +1,7 @@
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { Button, Icon } from 'native-base'
+import PropTypes from 'prop-types'
 
 import styles from './style'
 import config from '../../config'
@@ -12,7 +13,7 @@ export const styling = {
   subText: styles.subText
 }
 
-export default ({ children, buttonIcon, buttonOnPress }) => (
+const Tableau = ({ children, buttonIcon, buttonOnPress }) => (
   <LinearGradient
     colors={[ config.colors.brand, config.colors.accent ]}
     start={{ x: 0.0, y: 0.25 }}
@@ -35,3 +36,11 @@ export default ({ children, buttonIcon, buttonOnPress }) => (
     {children}
   </LinearGradient>
 )
+
+Tableau.propTypes = {
+  children: PropTypes.any,
+  buttonIcon: PropTypes.string,
+  buttonOnPress: PropTypes.func
+}
+
+export default Tableau

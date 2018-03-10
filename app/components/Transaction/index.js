@@ -24,12 +24,10 @@ export default class Transaction extends Component {
     const {
       type,
       status,
-      amount,
       asset,
       to,
       from,
       hash,
-      memo,
       createdAt,
       i18n
     } = this.props
@@ -103,13 +101,15 @@ export default class Transaction extends Component {
   }
 }
 
-// Transaction.propTypes = {
-//   status,
-//   amount,
-//   asset,
-//   to,
-//   from,
-//   hash,
-//   memo,
-//   createdAt
-// }
+Transaction.propTypes = {
+  status: PropTypes.string,
+  amount: PropTypes.number,
+  asset: PropTypes.string,
+  to: PropTypes.string,
+  from: PropTypes.string,
+  hash: PropTypes.string,
+  memo: PropTypes.string,
+  createdAt: PropTypes.oneOfType([ PropTypes.string, PropTypes.instanceOf(Date) ]),
+  i18n: PropTypes.object.isRequired,
+  type: PropTypes.string
+}
