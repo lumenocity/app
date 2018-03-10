@@ -13,7 +13,6 @@ So here's what we've got:
  * Setting up an inflation pool, with a few popular inflation pools built in for ease of use
  * Name your accounts so that they are easier to keep track of
  * QR codes can be used to export your keys, send your address to a friend or to pay your friend
- * [Fund/invite an account/user](https://github.com/lumenocity/app/issues/12)
 
 ## Roadmap
 
