@@ -105,11 +105,11 @@ export default {
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
   brandWarning: '#f0ad4e',
-  brandDark: '#000',
+  brandDark: config.colors.text,
   brandLight: '#f4f4f4',
 
   // Font
-  fontFamily: 'ClearSans',
+  fontFamily: config.fontFamily,
   fontSizeBase: 15,
   get fontSizeH1() {
     return this.fontSizeBase * 1.8
@@ -136,13 +136,13 @@ export default {
 
   // Header
   toolbarBtnColor: platform === 'ios' ? '#007aff' : '#fff',
-  toolbarDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
+  toolbarDefaultBg: platform === 'ios' ? '#F8F8F8' : 'white',
   toolbarHeight: platform === 'ios' ? (isIphoneX ? 88 : 64) : 56,
   toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
   toolbarInputColor: platform === 'ios' ? '#CECDD2' : '#fff',
   searchBarHeight: platform === 'ios' ? 30 : 40,
   searchBarInputHeight: platform === 'ios' ? 30 : 50,
-  toolbarBtnTextColor: '#000',
+  toolbarBtnTextColor: config.colors.text,
   toolbarDefaultBorder: '#a7a6ab',
   iosStatusbar: platform === 'ios' ? 'dark-content' : 'light-content',
   get statusBarColor() {
@@ -232,11 +232,11 @@ export default {
   },
 
   // Title
-  titleFontfamily: platform === 'ios' ? 'System' : 'Roboto_medium',
+  titleFontfamily: config.fontFamily,
   titleFontSize: platform === 'ios' ? 17 : 19,
   subTitleFontSize: platform === 'ios' ? 12 : 14,
-  subtitleColor: platform === 'ios' ? '#8e8e93' : '#FFF',
-  titleFontColor: platform === 'ios' ? '#000' : '#FFF',
+  subtitleColor: config.colors.text,
+  titleFontColor: config.colors.text,
 
   // Other
   borderRadiusBase: platform === 'ios' ? 5 : 2,

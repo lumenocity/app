@@ -19,11 +19,15 @@ export default routes => ({
   }),
 
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? config.colors.brand : 'white',
+    activeTintColor: config.colors.brand,
     showIcon: true,
-    allowFontScaling: false,
-    labelStyle: { fontSize: Platform.OS === 'ios' ? 12 : 9 },
-    inactiveBackgroundColor: 'white'
+    allowFontScaling: true,
+    labelStyle: { fontFamily: config.fontFamily },
+    style: { backgroundColor: 'white' },
+    indicatorStyle: { backgroundColor: config.colors.brand },
+    inactiveBackgroundColor: config.colors.subtle,
+    inactiveTintColor: config.colors.text,
+    upperCaseLabel: false
   },
 
   tabBarPosition: 'bottom',

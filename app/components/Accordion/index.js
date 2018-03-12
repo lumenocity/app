@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import CollapsibleAccordion from 'react-native-collapsible/Accordion'
 
 import style from './style'
+import config from '../../config'
 
 export default class Accordion extends Component {
   constructor() {
@@ -44,7 +45,7 @@ export default class Accordion extends Component {
         renderContent={(...params) => this.renderContent(...params)}
         activeSection={active}
         onChange={open => this.onChange(open)}
-        underlayColor="white"
+        underlayColor={config.colors.subtle}
         disabled={this.props.disabled}
       />
     )

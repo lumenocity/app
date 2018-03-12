@@ -13,8 +13,11 @@ export default {
     brand: '#21E692',
     accent: '#CAE692',
     subtle: '#e6e9ee',
+    faint: '#c9c8cd',
     text: '#383838'
   },
+
+  fontFamily: 'ClearSans',
 
   federationDomain: 'lumenocity.io',
   federationApi: 'https://stellarid.io/api',

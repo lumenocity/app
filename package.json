@@ -39,6 +39,7 @@
     "react-native-modal-dropdown": "mtimofiiv/react-native-modal-dropdown",
     "react-native-qrcode-scanner": "^0.0.30",
     "react-native-qrcode-svg": "^5.0.6",
+    "react-native-splash-screen": "^3.0.6",
     "react-native-svg": "^6.2.2",
     "react-native-text-input-mask": "0.5.2",
     "react-navigation": "^1.0.3",
@@ -63,6 +64,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./assets/fonts"]
- }
+    "assets": [
+      "./assets/fonts"
+    ]
+  }
 }

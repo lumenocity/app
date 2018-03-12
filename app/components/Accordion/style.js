@@ -7,21 +7,22 @@ const { width: viewportWidth } = Dimensions.get('window')
 export default StyleSheet.create({
   accordionHeader: {
     flexDirection: 'row',
-    borderBottomColor: config.colors.subtle,
+    borderBottomColor: config.colors.faint,
     borderBottomWidth: 1,
     padding: 5
   },
 
   accordionHeaderIcon: {
     width: 20,
-    color: config.colors.subtle,
+    color: config.colors.faint,
     fontSize: 20
   },
 
   accordionHeaderText: {
     width: viewportWidth - 50,
     color: config.colors.text,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: config.fontFamily
   },
 
   accordionBody: {

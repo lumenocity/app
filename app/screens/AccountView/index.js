@@ -326,7 +326,7 @@ export default class AccountsView extends Component {
           leftButton
           leftButtonIcon="arrow-back"
           leftButtonAction={() => this.goBack()}
-          rightButton
+          rightButton={false} // next version, ran out of time for this!
           rightButtonIcon="more"
           rightButtonAction={() => this.openActionsMenu()}
         />

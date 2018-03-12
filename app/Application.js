@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
 import { Root, StyleProvider } from 'native-base'
 import PropTypes from 'prop-types'
+import SplashScreen from 'react-native-splash-screen'
 
 import getTheme from '../native-base-theme/components'
 import { persistor, store } from './state/store'
@@ -13,7 +14,6 @@ import AddAccount from './screens/AddAccount'
 import Network from './lib/stellar-network'
 import config from './config'
 import i18n from '../i18n'
-import theme from './theme'
 
 const onBeforeLift = () => {
   store.dispatch(Actions.Session.initSession())
@@ -33,6 +33,10 @@ class Application extends Component {
 
   componentWillMount() {
     this.unsubscribe = store.subscribe(() => this.respondToStoreChanges())
+  }
+
+  componentDidMount() {
+    SplashScreen.hide()
   }
 
   componentWillUnmount() {
@@ -67,12 +71,14 @@ class Application extends Component {
           persistor={persistor}
         >
           <Root>
-            <AddAccount
-              isVisible={accounts.adding}
-              onAddAccount={key => this.loadAccount(key)}
-              canBeClosed={!this.noAccountYet()}
-              closeDialog={() => this.toggleAddDialog()}
-            />
+            <StyleProvider style={getTheme()}>
+              <AddAccount
+                isVisible={accounts.adding}
+                onAddAccount={key => this.loadAccount(key)}
+                canBeClosed={!this.noAccountYet()}
+                closeDialog={() => this.toggleAddDialog()}
+              />
+            </StyleProvider>
             <StyleProvider style={getTheme()}>
               <Navigator />
             </StyleProvider>

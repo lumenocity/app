@@ -1,17 +1,14 @@
 import React from 'react'
-import { Header, Right, Left, Body, Title, Button, Icon } from 'native-base'
+import { Header, Right, Left, Body, Title, Subtitle, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
-import { Platform } from 'react-native'
 
 import config from '../../config'
-
-const buttonStyle = Platform.OS === 'android' ? { color: 'white' } : {}
 
 const HeaderBar = props => (
   <Header
     backgroundColor={config.colors.brand}
     iosBarStyle="dark-content"
-    androidStatusBarColor={config.colors.brand}
+    hasSubtitle={!!props.subtitle}
   >
     <Left>
       {props.leftButton ? (
@@ -23,15 +20,19 @@ const HeaderBar = props => (
           <Icon
             ios={`ios-${props.leftButtonIcon}`}
             android={`md-${props.leftButtonIcon}`}
-            style={buttonStyle}
           />
         </Button>
       ) : null}
     </Left>
     <Body>
-      <Title>
-        {props.title || 'Interstellar.cash'}
+      <Title style={{ fontFamily: config.fontFamily }}>
+        {props.title}
       </Title>
+      {props.subtitle ? (
+        <Subtitle style={{ fontFamily: config.fontFamily }}>
+          {props.subtitle}
+        </Subtitle>
+      ) : null}
     </Body>
     <Right>
       {props.rightButton ? (
@@ -43,7 +44,6 @@ const HeaderBar = props => (
           <Icon
             ios={`ios-${props.rightButtonIcon}`}
             android={`md-${props.rightButtonIcon}`}
-            style={buttonStyle}
           />
         </Button>
       ) : null}
@@ -53,6 +53,7 @@ const HeaderBar = props => (
 
 HeaderBar.propTypes = {
   title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   rightButton: PropTypes.bool,
   rightButtonIcon: PropTypes.string,
   rightButtonAction: PropTypes.func,
