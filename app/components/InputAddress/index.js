@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Modal } from 'react-native'
 import { Input, Button, Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 
+import HeaderBar from '../HeaderBar'
 import style from './style'
+import { qrParse } from '../../lib/qr'
 
 class InputAddress extends Component {
   constructor() {
@@ -18,9 +20,18 @@ class InputAddress extends Component {
     }
   }
 
-  onUpdateValue(address) {
-    this.setState({ qrCodeScannerOpen: false, value: address })
-    this.props.onUpdate(address)
+  onScan(raw) {
+    const key = qrParse(raw)
+
+    if (!key) return
+
+    this.setState({ qrCodeScannerOpen: false, value: key })
+    this.props.onUpdate(key)
+  }
+
+  onType(value) {
+    this.setState({ value })
+    this.props.onUpdate(value)
   }
 
   toggleScanner() {
@@ -28,11 +39,25 @@ class InputAddress extends Component {
   }
 
   renderScanner() {
+    const { i18n } = this.context
+
     return (
-      <QRCodeScanner
-        onRead={({ data }) => this.onUpdateValue(data)}
-        showMarker
-      />
+      <Modal
+        visible={this.state.qrCodeScannerOpen}
+        animationType="fade"
+        onRequestClose={() => {}}
+      >
+        <HeaderBar
+          title={i18n.t('ui.common.scan_qr_code')}
+          rightButton
+          rightButtonIcon="close"
+          rightButtonAction={() => this.toggleScanner()}
+        />
+        <QRCodeScanner
+          onRead={({ data }) => this.onScan(data)}
+          showMarker
+        />
+      </Modal>
     )
   }
 
@@ -46,7 +71,7 @@ class InputAddress extends Component {
           <Input
             value={this.state.value}
             placeholder={i18n.t('ui.inputs.stellar_address.placeholder')}
-            onChangeText={address => this.onUpdateValue(address)}
+            onChangeText={address => this.onType(address)}
           />
         </View>
         <View style={style.qrButton}>

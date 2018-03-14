@@ -35,7 +35,14 @@ Don't blame yourself - they're 56 characters of random numbers and letters! Lume
 
 To that end, you can name your accounts anything you want, and this name will be what you can use in the app to do things to your account. Remember though, that this is only available inside the app, and does not actually store anything on the blockchain.`
 
+const onboardingGreeting = `Lumenocity is a brand new Stellar wallet.
+
+But it's still BETA software, and a few things are not 100% working yet. Notably, you may find a few issues with error handling and validation. Also still somewhat lacking is customisation options after an initial account creation, like removing/changing a federated address, and changing an inflation destination.
+
+Those are on the way, as well as the stuff in the overall roadmap, such as push notifications, syncing with your phone's contacts and full support for the many assets of the Stellar network!`
+
 export default {
+  onboardingGreeting,
   onboardingImport,
   onboardingFederation,
   onboardingInflation,

@@ -2,8 +2,10 @@ import env from 'react-native-config'
 
 export default {
 
-  network: 'https://horizon-testnet.stellar.org',
-  testnet: true,
+  networks: {
+    test: 'https://horizon-testnet.stellar.org',
+    live: 'https://horizon.stellar.org/'
+  },
 
   assetList: 'https://api.stellarterm.com/v1/ticker.json',
 
@@ -12,8 +14,8 @@ export default {
   colors: {
     brand: '#21E692',
     accent: '#CAE692',
-    subtle: '#e6e9ee',
-    faint: '#c9c8cd',
+    subtle: '#fff',
+    faint: '#e6e9ee',
     text: '#383838'
   },
 

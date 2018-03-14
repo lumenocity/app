@@ -1,12 +1,14 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+  container: {
+    padding: 10
+  },
+
   fieldFolder: {
     flex: 1,
     paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 5
+    paddingBottom: 10
   },
 
   amountContainer: {
@@ -24,24 +26,18 @@ export default StyleSheet.create({
   },
 
   amountAssetName: {
-    flex: 1
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   amountInAccount: {
     flex: 1
   },
 
-  dropdownContainer: {
-    flex: 1,
-    padding: 10
-  },
-
-  dropdownText: {
-    fontSize: 16
-  },
-
-  dropdownStyle: {
-    flex: 1,
-    padding: 10
+  label: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    paddingTop: 20
   }
 })

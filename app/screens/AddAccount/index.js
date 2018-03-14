@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View } from 'react-native'
+import { Modal, View, ActivityIndicator, TextInput } from 'react-native'
 import {
   Container,
   Content,
@@ -9,12 +9,11 @@ import {
   Button,
   Icon,
   Body,
-  Left
+  Left,
+  H1
 } from 'native-base'
 import PropTypes from 'prop-types'
-import TextInputMask from 'react-native-text-input-mask'
 import { Keypair } from 'stellar-sdk'
-import ModalDropdown from 'react-native-modal-dropdown'
 
 import style from './style'
 import HeaderBar from '../../components/HeaderBar'
@@ -22,8 +21,7 @@ import InputAddress from '../../components/InputAddress'
 import config from '../../config'
 import Actions from '../../actions'
 import Accordion from '../../components/Accordion'
-
-import { WALLET_SECRET } from '../../../fixtures/testnet'
+import Dropdown from '../../components/Dropdown'
 
 export default class AddAccount extends Component {
   constructor() {
@@ -31,8 +29,9 @@ export default class AddAccount extends Component {
     this.state = {
       step: 0,
       skipped: [],
+      showGreeting: false,
 
-      privateKey: WALLET_SECRET,
+      privateKey: null,
       address: null,
       importing: false,
 
@@ -46,6 +45,7 @@ export default class AddAccount extends Component {
 
   componentWillMount() {
     this.unsubscribe = this.context.store.subscribe(() => this.respondToStoreChanges())
+    if (this.props.showGreeting) this.setState({ showGreeting: true })
   }
 
   componentWillUnmount() {
@@ -57,15 +57,15 @@ export default class AddAccount extends Component {
     const account = accounts.data.find(({ address }) => address === this.state.address)
 
     if (this.state.importing && account) {
-      this.setState({ step: 1, importing: false })
+      this.setState({ step: this.state.step + 1, importing: false })
     }
 
     if (this.state.federating && account.federatedAddress) {
-      this.setState({ step: 2, federating: false })
+      this.setState({ step: this.state.step + 1, federating: false })
     }
 
     if (this.state.inflating && account.inflation) {
-      this.setState({ step: 3, inflating: false })
+      this.setState({ step: this.state.step + 1, inflating: false })
     }
 
     this.forceUpdate()
@@ -81,7 +81,7 @@ export default class AddAccount extends Component {
 
     this.context.store.dispatch(Actions.Accounts.load(
       this.context.network,
-      { address }
+      { address, secret: this.state.privateKey }
     ))
   }
 
@@ -114,6 +114,26 @@ export default class AddAccount extends Component {
     this.setState({ skipped, step })
   }
 
+  renderGreeting() {
+    const { i18n } = this.context
+
+    return (
+      <View style={style.accordionBody}>
+        <H1>{i18n.t('onboarding.greeting_title')}</H1>
+        <Text>{i18n.t('onboarding.greeting_body')}</Text>
+
+        <Button
+          onPress={() => this.setState({ step: this.state.step + 1 })}
+          block
+        >
+          <Text>
+            {i18n.t('onboarding.greeting_begin_btn')}
+          </Text>
+        </Button>
+      </View>
+    )
+  }
+
   renderImportKey() {
     const { i18n } = this.context
 
@@ -125,10 +145,17 @@ export default class AddAccount extends Component {
           onUpdate={key => this.addKey(key)}
         />
         <Button
-          block
           onPress={() => this.importAccount()}
+          block
+          disabled={this.state.importing}
         >
-          <Text>{i18n.t('onboarding.add_btn')}</Text>
+          {this.state.importing ? (
+            <ActivityIndicator style={style.loadingBtn} size="small" color="white" />
+          ) : (
+            <Text>
+              {i18n.t('onboarding.add_btn')}
+            </Text>
+          )}
         </Button>
       </View>
     )
@@ -140,24 +167,38 @@ export default class AddAccount extends Component {
     return (
       <View style={style.accordionBody}>
         <Text>{i18n.t('onboarding.about_federation')}</Text>
-        <TextInputMask
+        <TextInput
           style={style.inputField}
-          onChangeText={(formatted, extracted) => {
-            this.setState({ federatedAddress: extracted.trim().toLowerCase() })
+          placeholder="you*lumenocity.io"
+          onChangeText={(text) => {
+            this.setState({ federatedAddress: text.trim().toLowerCase() })
           }}
-          mask="[___-----------------------------]{*lumenocity.io}"
         />
-        <Button
-          onPress={() => this.skip()}
-          bordered
-        >
-          <Text>{i18n.t('onboarding.skip_btn')}</Text>
-        </Button>
-        <Button
-          onPress={() => this.federateAccount()}
-        >
-          <Text>{i18n.t('onboarding.federate_btn')}</Text>
-        </Button>
+        <View style={style.buttonHolder}>
+          {this.state.federating ? <View /> : (
+            <Button
+              onPress={() => this.skip()}
+              bordered
+              style={style.skipBtn}
+            >
+              <Text>{i18n.t('onboarding.skip_btn')}</Text>
+            </Button>
+          )}
+          <Button
+            onPress={() => this.federateAccount()}
+            block
+            style={style.goBtn}
+            disabled={this.state.federating}
+          >
+            {this.state.federating ? (
+              <ActivityIndicator style={style.loadingBtn} size="small" color="white" />
+            ) : (
+              <Text>
+                {i18n.t('onboarding.federate_btn')}
+              </Text>
+            )}
+          </Button>
+        </View>
       </View>
     )
   }
@@ -168,28 +209,38 @@ export default class AddAccount extends Component {
     return (
       <View style={style.accordionBody}>
         <Text>{i18n.t('onboarding.about_inflation')}</Text>
-        <ModalDropdown
+        <Dropdown
           defaultValue={i18n.t('ui.inputs.inflation_pools.placeholder')}
           options={config.inflationPools}
-          onSelect={(i, { address }) => this.setState({ inflationAddress: address })}
+          onSelect={({ address }) => this.setState({ inflationAddress: address })}
           renderRow={({ title }) => <Text>{title}</Text>}
           renderButtonText={({ title }) => title}
-          style={style.dropdownContainer}
-          textStyle={style.dropdownText}
-          dropdownStyle={style.dropdownStyle}
         />
-        <Button
-          onPress={() => this.skip()}
-          bordered
-        >
-          <Text>{i18n.t('onboarding.skip_btn')}</Text>
-        </Button>
-        <Button
-          onPress={() => this.addInflation()}
-          block
-        >
-          <Text>{i18n.t('onboarding.set_inflation_btn')}</Text>
-        </Button>
+        <View style={style.buttonHolder}>
+          {this.state.inflating ? <View /> : (
+            <Button
+              onPress={() => this.skip()}
+              bordered
+              style={style.skipBtn}
+            >
+              <Text>{i18n.t('onboarding.skip_btn')}</Text>
+            </Button>
+          )}
+          <Button
+            onPress={() => this.addInflation()}
+            block
+            style={style.goBtn}
+            disabled={this.state.inflating}
+          >
+            {this.state.inflating ? (
+              <ActivityIndicator style={style.loadingBtn} size="small" color="white" />
+            ) : (
+              <Text>
+                {i18n.t('onboarding.set_inflation_btn')}
+              </Text>
+            )}
+          </Button>
+        </View>
       </View>
     )
   }
@@ -248,7 +299,7 @@ export default class AddAccount extends Component {
   renderRightIcon(index) {
     if (this.state.step <= index) return null
     const isSkipped = this.state.skipped.indexOf(index) > -1
-    
+
     return (
       <Icon
         style={isSkipped ? style.accordionHeaderSkipped : style.accordionHeaderCheckmark}
@@ -259,6 +310,19 @@ export default class AddAccount extends Component {
 
   render() {
     const { i18n } = this.context
+    const sections = [
+      { title: 'Import your account', content: this.renderImportKey() },
+      { title: 'Federation', content: this.renderFederation() },
+      { title: 'Inflation', content: this.renderInflation() },
+      { title: 'Finalise', content: this.renderFinal() }
+    ]
+
+    if (this.state.showGreeting) {
+      sections.unshift({
+        title: 'Welcome to Lumenocity',
+        content: this.renderGreeting()
+      })
+    }
 
     return (
       <Modal visible={this.props.isVisible} onRequestClose={() => this.props.closeDialog()}>
@@ -272,12 +336,7 @@ export default class AddAccount extends Component {
           <Content>
             <Accordion
               activeSection={this.state.step}
-              sections={[
-                { title: 'Import your account', content: this.renderImportKey() },
-                { title: 'Federation', content: this.renderFederation() },
-                { title: 'Inflation', content: this.renderInflation() },
-                { title: 'Finalise', content: this.renderFinal() }
-              ]}
+              sections={sections}
               onChange={step => this.setState({ step })}
               rightIcon={step => this.renderRightIcon(step)}
               disabled
@@ -296,8 +355,8 @@ AddAccount.contextTypes = {
 }
 
 AddAccount.propTypes = {
-  onAddAccount: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   canBeClosed: PropTypes.bool.isRequired,
-  closeDialog: PropTypes.func.isRequired
+  closeDialog: PropTypes.func.isRequired,
+  showGreeting: PropTypes.bool.isRequired
 }

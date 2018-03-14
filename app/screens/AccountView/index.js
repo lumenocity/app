@@ -15,7 +15,7 @@ import {
   Body,
   ActionSheet
 } from 'native-base'
-import { Modal, View, RefreshControl } from 'react-native'
+import { Modal, View, RefreshControl, Clipboard } from 'react-native'
 import PropTypes from 'prop-types'
 import QRCode from 'react-native-qrcode-svg'
 import { distanceInWords } from 'date-fns'
@@ -28,6 +28,7 @@ import Loading from '../../components/Loading'
 import effects from '../../../language/effects'
 import Tableau, { styling as TableauStyle } from '../../components/Tableau'
 import { preciseRound } from '../../lib/view-helpers'
+import { qrFormat } from '../../lib/qr'
 
 const SHOW_TYPES = [
   'create_account',
@@ -35,8 +36,7 @@ const SHOW_TYPES = [
   'account_debited'
 ]
 
-export default class AccountsView extends Component {
-
+export default class AccountView extends Component {
   constructor() {
     super()
     this.state = {
@@ -46,6 +46,15 @@ export default class AccountsView extends Component {
       lastFetch: null,
       showQRModal: false
     }
+  }
+
+  componentWillMount() {
+    this.unsubscribe = this.context.store.subscribe(() => this.respondToStoreChanges())
+    this.respondToStoreChanges()
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
   }
 
   actionButtons() {
@@ -90,15 +99,6 @@ export default class AccountsView extends Component {
     ]
   }
 
-  componentWillMount() {
-    this.unsubscribe = this.context.store.subscribe(() => this.respondToStoreChanges())
-    this.respondToStoreChanges()
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-
   respondToStoreChanges() {
     const { accounts } = this.context.store.getState()
     const currentAccount = this.currentAccount()
@@ -121,9 +121,9 @@ export default class AccountsView extends Component {
       this.setState({ loadingTransactions: false, refreshing: false })
     }
 
-    if (this.state.refreshing && this.state.loadingTransactions) {
+    // if (this.state.refreshing && this.state.loadingTransactions) {
 
-    }
+    // }
 
     if (currentAccount && !currentAccount.txLoaded && !this.state.loadingTransactions) {
       this.context.store.dispatch(Actions.Accounts.getTransactions(
@@ -162,7 +162,7 @@ export default class AccountsView extends Component {
       asset === anAsset.code || asset === 'native' && anAsset.domain === 'native'
     ))
 
-    if (!assetEntry) return
+    if (!assetEntry) return ''
 
     const [ dollars, cents ] = (amount * assetEntry.price_USD).toString().split('.')
     return `$${dollars}.${cents} USD`
@@ -183,11 +183,12 @@ export default class AccountsView extends Component {
     switch (action) {
       case 'send':
       case 'inflation':
-        alert(`You clicked: ${action}`)
-      break
+        return alert(`You clicked: ${action}`)
+        break
       case 'federate': return this.props.navigation.navigate('Federate')
       case 'rename': return this.toggleRenameAccount()
       case 'help': return this.props.navigation.navigate('AccountHelp')
+      default: return null
     }
   }
 
@@ -225,6 +226,8 @@ export default class AccountsView extends Component {
   }
 
   renderQRModal(address) {
+    const { i18n } = this.context
+
     return (
       <Modal
         visible={this.state.showQRModal}
@@ -233,24 +236,29 @@ export default class AccountsView extends Component {
         onRequestClose={() => this.toggleQRCode()}
         presentationStyle="overFullScreen"
       >
-        <Button
-          transparent
-          onPress={() => this.toggleQRCode()}
-          small
-        >
-          <Icon
-            ios={`ios-close`}
-            android={`md-close`}
-            style={styles.qrModalCloseBtn}
-          />
-        </Button>
+        <HeaderBar
+          title={i18n.t('accounts.qr_header')}
+          rightButton
+          rightButtonIcon="close"
+          rightButtonAction={() => this.toggleQRCode()}
+        />
         <View style={styles.qrModal}>
+          <Text>Click to copy:</Text>
+          <Button
+            transparent
+            style={styles.addressCopyBtn}
+            onPress={() => Clipboard.setString(address)}
+          >
+            <Text style={styles.addressCopyBtnText}>{address}</Text>
+          </Button>
+
           <QRCode
-            value={address}
+            value={qrFormat(address, 'address')}
             logo={require('../../../android/app/src/main/res/mipmap-mdpi/ic_launcher.png')}
             logoMargin={5}
             size={300}
           />
+          <Text style={styles.qrCopy}>{i18n.t('accounts.qr_copy')}</Text>
         </View>
       </Modal>
     )
@@ -262,17 +270,19 @@ export default class AccountsView extends Component {
     const { i18n } = this.context
     const i18nVars = {
       ...tx,
+      amount,
       assetAbbreviation: tx.asset === 'native' ? 'XLM' : tx.asset
     }
 
     if (tx.from) i18nVars.truncFrom = `${tx.from.slice(0, 4)}...${tx.from.slice(-4)}`
     if (tx.to) i18nVars.truncTo = `${tx.to.slice(0, 4)}...${tx.to.slice(-4)}`
-    
+
     return (
       <ListItem
         avatar
         key={`tx-${tx.id}`}
-        onPress={() => this.gotoTransaction(tx.hash)}>
+        onPress={() => this.gotoTransaction(tx.hash)}
+      >
         <Left>
           <Icon name={effect.icon} />
         </Left>
@@ -360,11 +370,10 @@ export default class AccountsView extends Component {
       </Container>
     )
   }
+}
 
-  static contextTypes = {
-    store: PropTypes.object,
-    network: PropTypes.object,
-    i18n: PropTypes.object
-  }
-
+AccountView.contextTypes = {
+  store: PropTypes.object,
+  network: PropTypes.object,
+  i18n: PropTypes.object
 }

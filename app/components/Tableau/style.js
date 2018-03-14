@@ -33,11 +33,11 @@ export default StyleSheet.create({
   },
 
   button: {
-    color: 'white',
     position: 'relative',
-    left: viewportWidth - 50,
-    borderWidth: 1,
-    borderColor: 'red',
-    borderStyle: 'solid'
+    left: viewportWidth - 50
+  },
+
+  buttonIcon: {
+    color: 'white'
   }
 })

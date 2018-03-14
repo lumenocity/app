@@ -22,6 +22,7 @@ const Tableau = ({ children, buttonIcon, buttonOnPress }) => (
   >
     {buttonIcon && buttonOnPress ? (
       <Button
+        style={styles.button}
         transparent
         onPress={() => buttonOnPress()}
         small
@@ -29,7 +30,7 @@ const Tableau = ({ children, buttonIcon, buttonOnPress }) => (
         <Icon
           ios={`ios-${buttonIcon}`}
           android={`md-${buttonIcon}`}
-          style={styles.button}
+          style={styles.buttonIcon}
         />
       </Button>
      ) : null}

@@ -7,16 +7,14 @@ import {
   Button,
   Item
 } from 'native-base'
-import { View } from 'react-native'
+import { View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
-import ModalDropdown from '../../../../react-native-modal-dropdown'
 
 import Actions from '../../actions'
 import style from './style'
 import HeaderBar from '../../components/HeaderBar'
 import InputAddress from '../../components/InputAddress'
-
-import { TEST_PEER } from '../../../fixtures/testnet'
+import Dropdown from '../../components/Dropdown'
 
 export default class SendForm extends Component {
   constructor() {
@@ -33,9 +31,11 @@ export default class SendForm extends Component {
     this.unsubscribe()
   }
 
-  getAccount(address) {
+  getAccount(from) {
     const { accounts } = this.context.store.getState()
-    return accounts.data.find(account => account.address === address)
+    return accounts.data.find(({ address }) => {
+      return address === from
+    })
   }
 
   respondToStoreChanges() {
@@ -63,6 +63,32 @@ export default class SendForm extends Component {
     this.context.store.dispatch(Actions.Transaction.set(prop))
   }
 
+  readyToSend() {
+    const { transaction } = this.context.store.getState()
+    return !!transaction.amount && !!transaction.from && !!transaction.to
+  }
+
+  confirmSend() {
+    const { i18n, store } = this.context
+    const { transaction } = store.getState()
+
+    Alert.alert(
+      i18n.t('send.confirm_alert_title'),
+      i18n.t('send.confirm_alert_text', transaction),
+      [
+        {
+          text: i18n.t('send.confirm_sending_btn'),
+          onPress: () => this.send()
+        },
+        {
+          text: i18n.t('send.cancel_sending_btn'),
+          style: 'cancel'
+        }
+      ],
+      { cancelable: true }
+    )
+  }
+
   send() {
     const { store } = this.context
     const { transaction } = store.getState()
@@ -85,32 +111,38 @@ export default class SendForm extends Component {
     return (
       <Container>
         <HeaderBar title={i18n.t('send.form_header')} />
-        <Content>
+        <Content style={style.container}>
           <View style={style.fieldFolder}>
-            <ModalDropdown
-              ref={self => { this.accountPicker = self }}
+            <Text style={style.label}>
+              {i18n.t('send.from_address_label')}
+            </Text>
+            <Dropdown
+              _ref={self => { this.accountPicker = self }}
               defaultValue={i18n.t('ui.inputs.account_picker.placeholder')}
               options={accounts.data}
               onSelect={({ address }) => this.updateTxField({ from: address })}
               renderRow={({ title, federatedAddress }) => <Text>{federatedAddress || title}</Text>}
-              renderButtonText={({ title }) => title}
-              style={style.dropdownContainer}
-              textStyle={style.dropdownText}
-              dropdownStyle={style.dropdownStyle}
+              renderButtonText={({ title, federatedAddress }) => federatedAddress || title}
             />
             <View style={style.fieldFolder}>
+              <Text style={style.label}>
+                {i18n.t('send.to_address_label')}
+              </Text>
               <InputAddress
-                value={transaction.to || TEST_PEER}
+                value={transaction.to}
                 onUpdate={value => this.updateTxField({ to: value })}
               />
             </View>
             <View style={style.amountContainer}>
+              <Text style={style.label}>
+                {i18n.t('send.amount_label')}
+              </Text>
               <View style={style.amountEntryContainer}>
-                <Item regular style={style.amountEntry}>
+                <Item style={style.amountEntry}>
                   <Input
                     placeholder={i18n.t('ui.inputs.asset_amount.placeholder')}
                     keyboardType="numeric"
-                    onChangeText={value => this.updateTxField({ amount: value })}
+                    onChangeText={value => this.updateTxField({ amount: Number(value) })}
                   />
                 </Item>
                 <View style={style.amountAssetName}>
@@ -126,7 +158,11 @@ export default class SendForm extends Component {
               </View>
             </View>
           </View>
-          <Button onPress={() => this.send()} block>
+          <Button
+            onPress={() => this.confirmSend()}
+            block
+            disabled={!this.readyToSend()}
+          >
             <Text>{i18n.t('send.send_btn')}</Text>
           </Button>
         </Content>

@@ -11,20 +11,14 @@ import Actions from './actions'
 import Loading from './components/Loading'
 import Navigator from './navigator/index'
 import AddAccount from './screens/AddAccount'
-import Network from './lib/stellar-network'
+import initNetwork from './lib/stellar-network'
 import config from './config'
 import i18n from '../i18n'
-
-const onBeforeLift = () => {
-  store.dispatch(Actions.Session.initSession())
-  store.dispatch(Actions.Assets.loadAssetTypes())
-  store.dispatch({ type: 'CLEAR_LOADED_INDICATORS' })
-}
 
 class Application extends Component {
   constructor() {
     super()
-    this.network = Network(config.network, config.testnet)
+    this.network = null
   }
 
   getChildContext() {
@@ -36,15 +30,45 @@ class Application extends Component {
   }
 
   componentDidMount() {
+    const state = store.getState()
     SplashScreen.hide()
+
+    if (!this.network) {
+      this.initNetwork(state.network.env)
+    }
   }
 
   componentWillUnmount() {
     this.unsubscribe()
   }
 
+  onBeforeLift() {
+    const state = store.getState()
+
+    store.dispatch(Actions.Session.initSession())
+    store.dispatch(Actions.Assets.loadAssetTypes())
+    store.dispatch({ type: 'CLEAR_LOADED_INDICATORS' })
+
+    if (!this.network) {
+      this.initNetwork(state.network.env)
+    }
+  }
+
   respondToStoreChanges() {
+    const { network } = store.getState()
+
+    if (this.network) {
+      if (this.network.serverURL.toString() !== config.networks[network.env]) {
+        this.initNetwork(network.env)
+      }
+    }
+
     this.forceUpdate()
+  }
+
+  initNetwork(env) {
+    if (!env) return
+    this.network = initNetwork(config.networks[env], env === 'test')
   }
 
   noAccountYet() {
@@ -67,12 +91,13 @@ class Application extends Component {
       <Provider store={store}>
         <PersistGate
           loading={<Loading />}
-          onBeforeLift={onBeforeLift}
+          onBeforeLift={() => this.onBeforeLift()}
           persistor={persistor}
         >
           <Root>
             <StyleProvider style={getTheme()}>
               <AddAccount
+                showGreeting={this.noAccountYet()}
                 isVisible={accounts.adding}
                 onAddAccount={key => this.loadAccount(key)}
                 canBeClosed={!this.noAccountYet()}

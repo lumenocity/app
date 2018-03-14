@@ -1,8 +1,9 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
+import config from '../../config'
+
 const { width: viewportWidth } = Dimensions.get('window')
 
-import config from '../../config'
 
 export default StyleSheet.create({
   totalBalanceContainer: {
@@ -42,10 +43,12 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
 
-  qrModalCloseBtn: {
-    color: 'black',
-    position: 'relative',
-    left: viewportWidth - 50,
-    top: 20
+  qrCopy: {
+    textAlign: 'center',
+    padding: 10
+  },
+
+  addressCopyBtnText: {
+    fontSize: 10
   }
 })

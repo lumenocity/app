@@ -31,13 +31,18 @@ export default {
       date: 'MMMM D, YYYY @ H:mm',
       inflation_address: 'Inflation pool address',
       federated_address: 'Federated address',
-      account_address: 'Account address'
+      account_address: 'Account address',
+      testnet: 'Testnet',
+      scan_qr_code: 'Scan a QR Code'
     }
 
   },
 
   onboarding: {
+    greeting_begin_btn: 'Begin',
     header: 'Add Account',
+    greeting_title: 'Welcome to Lumenocity!',
+    greeting_body: long.onboardingGreeting,
     segment_existing_account: 'Import Existing',
     about_import: long.onboardingImport,
     add_btn: 'Import account',
@@ -58,6 +63,8 @@ export default {
     no_accounts: 'You have absolutely no accounts',
     no_transactions: 'You have absolutely no transactions',
     balance: 'Balance',
+    qr_header: 'Your address',
+    qr_copy: 'This code contains this account\'s address. Your friends can use it to pay you.',
 
     actions: {
       title: 'Account Actions',
@@ -85,6 +92,13 @@ export default {
     send_btn: 'Send',
     new_send_btn: 'New Transaction',
     view_on_stellarchain: 'View on StellarChain',
+    from_address_label: 'Send from address',
+    to_address_label: 'Send to',
+    amount_label: 'Amount',
+    confirm_alert_title: 'Confirm transaction',
+    confirm_alert_text: 'Are you sure you want to send {{amount}} XLM?',
+    confirm_sending_btn: 'Do it!',
+    cancel_sending_btn: 'Cancel',
 
     status: {
       processing: 'processing',
@@ -94,6 +108,8 @@ export default {
 
   settings: {
     header: 'Settings',
+    beta_message: 'This software is still classified as BETA. It is not final. Although a best effort has been made to eliminate bugs, it is still provided as-is.',
+    purge_warning: 'WARNING: This will delete all local data. Please make sure your private key is secure somewhere!',
 
     actions: {
       purge: 'Clear all data'

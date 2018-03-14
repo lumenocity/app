@@ -27,7 +27,7 @@ export default {
 
   load: createAction('GRAB_ACCOUNT', async (server, { address, secret }) => {
     try {
-      const accountAddress = secret ? Keypair.fromSecret(secret) : address
+      const accountAddress = secret ? Keypair.fromSecret(secret).publicKey() : address
       const account = await server.loadAccount(accountAddress)
       const title = randomName().raw.map(word => `${word[0].toUpperCase()}${word.slice(1)}`).join(' ')
 

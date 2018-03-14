@@ -18,3 +18,7 @@ export const transaction = {
   hash: null,
   type: null
 }
+
+export const network = {
+  env: 'live'
+}

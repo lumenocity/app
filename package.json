@@ -1,6 +1,6 @@
 {
   "name": "lumenocity",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start:metro": "node node_modules/react-native/local-cli/cli.js start",

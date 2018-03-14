@@ -25,7 +25,7 @@ export default routes => ({
     labelStyle: { fontFamily: config.fontFamily },
     style: { backgroundColor: 'white' },
     indicatorStyle: { backgroundColor: config.colors.brand },
-    inactiveBackgroundColor: config.colors.subtle,
+    inactiveBackgroundColor: 'white',
     inactiveTintColor: config.colors.text,
     upperCaseLabel: false
   },
